@@ -1,0 +1,10 @@
+.form-style-display-inspection {
+  color: white;
+  text-align: center;
+  text-decoration: none;
+}
+
+.form-style-display-inspection > * {
+  text-decoration: none;
+  color: white;
+}

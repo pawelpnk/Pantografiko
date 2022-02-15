@@ -1,0 +1,24 @@
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.btn-login button {
+  width: 100px;
+  height: 30px;
+  border: 2px solid black;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.btn-login button:hover {
+  color: white;
+  background-color: black;
+}
+
+.validate-message {
+  color: red;
+}

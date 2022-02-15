@@ -1,0 +1,49 @@
+.inspection-add-form {
+  margin: auto;
+  padding: 15px;
+  width: 800px;
+  /* background-color: black; */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inspection-form {
+  margin: 15px 0;
+  border: 2px solid gray;
+  padding: 15px;
+  border-radius: 15px;
+  background-color: darkgray;
+}
+
+.validation-message-form-add {
+  font-size: 15px;
+  color: red;
+}
+
+.all-form-block {
+  font-size: 15px;
+  /* margin-bottom: 2px; */
+}
+
+.btn-form-add {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-form-add button {
+  background-color: white;
+  padding: 2px 60px;
+  color: black;
+  cursor: pointer;
+  border: 2px solid black;
+  font-weight: bold;
+  transition: .3s;
+}
+
+.btn-form-add button:hover {
+  background-color: black;
+  color: white;
+  border: 2px solid white;
+}

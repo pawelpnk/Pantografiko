@@ -1,0 +1,7 @@
+.main-style {
+  margin: auto;
+  padding: 15px;
+  max-width: 1000px;
+  min-height: 100vh;
+  background-color: black;
+}
