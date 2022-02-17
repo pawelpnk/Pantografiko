@@ -36,7 +36,7 @@ export class PagesController {
   @Get('/fetch/:id')
   async fetchOneInspection(
     @Res() res: Response,
-    @Param('id') ID
+    @Param('id') ID: string
   ): Promise<Object> {
     const searchOneInspection = await this.pagesService.findInspection(ID);
     return res.status(HttpStatus.OK).json({
@@ -49,7 +49,7 @@ export class PagesController {
   @Delete('/delete/:id')
   async deleteInspection(
     @Res() res: Response,
-    @Param('id') ID
+    @Param('id') ID: string
   ): Promise<Object> {
     const deletedInspection = await this.pagesService.deleteInspection(ID);
     return res.status(HttpStatus.OK).json({
@@ -62,7 +62,7 @@ export class PagesController {
   @Patch('/update/:id')
   async updateinspection(
     @Res() res: Response,
-    @Param('id') ID,
+    @Param('id') ID: string,
     @Body() inspectionDTO: CreatePagesDTO
   ): Promise<Object> {
     const updateInspection = await this.pagesService.updateInspection(ID, inspectionDTO);

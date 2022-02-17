@@ -1,6 +1,6 @@
 export class CreatePagesDTO {
   IDUser: string;
-  locomotiveNumber?: string;
+  locomotiveNumber: string;
   collectorNumber: number;
   inspectionDate: string;
   collectorType: number;

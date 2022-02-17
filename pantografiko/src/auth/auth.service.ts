@@ -15,7 +15,7 @@ export class AuthService {
     return bcrypt.hash(password, 8);
   }
 
-  async comparePasswords(newPassword: string, passwordHash: string): Promise<any> {
+  async comparePasswords(newPassword: string, passwordHash: string): Promise<boolean> {
     return bcrypt.compare(newPassword, passwordHash);
   }
 }

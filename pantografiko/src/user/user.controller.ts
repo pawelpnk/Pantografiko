@@ -1,5 +1,4 @@
 import { loginUser } from './../dto/loginUser.dto';
-// import { IUser } from './../interfaces/user.interface';
 import { Body, Controller, Get, HttpStatus, Post, Res, Param, NotFoundException, HttpException, UseGuards, HttpCode } from '@nestjs/common';
 import { CreateUserDTO } from 'src/dto/create-user.dto';
 import { UserService } from './user.service';
@@ -40,7 +39,6 @@ export class UserController {
         expires_in: process.env.EXPIRESIN
       })
     } catch {
-      // throw new HttpException('Failed credentials', HttpStatus.NOT_FOUND);
       return res.status(400).json({
         message: 'Failed credentials'
       })

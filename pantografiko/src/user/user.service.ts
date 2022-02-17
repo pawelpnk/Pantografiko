@@ -2,7 +2,7 @@ import { loginUser } from './../dto/loginUser.dto';
 import { CreateUserDTO } from 'src/dto/create-user.dto';
 import { UserResponse } from './../dto/userResponse.dto';
 import { IUser, UserRole } from './../interfaces/user.interface';
-import { HttpException, Injectable, NotFoundException, HttpStatus, forwardRef, Inject } from '@nestjs/common';
+import { HttpException, Injectable, HttpStatus, forwardRef, Inject } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { AuthService } from 'src/auth/auth.service';
@@ -15,20 +15,20 @@ export class UserService {
   ) {}
 
   filter(user: CreateUserDTO): UserResponse {
-    const { login, email } = user;
-    return { login, email };
+    const { login, email, role } = user;
+    return { login, email, role };
   }
 
   async createUser(user: CreateUserDTO): Promise<UserResponse> {
     
-      const checkLogin = await this.findByLogin(user.login);
-      const checkEmail = await this.findByEmail(user.email.toLowerCase());
+      const checkLogin: boolean = await this.findByLogin(user.login) ? true : false;
+      const checkEmail: boolean = await this.findByEmail(user.email.toLowerCase()) ? true : false;
 
       if(checkLogin || checkEmail) {
         throw new HttpException('User already exists', HttpStatus.CONFLICT);
       }
 
-      const hashPasswordNewUser = await this.authService.hashPassword(user.password);
+      const hashPasswordNewUser: string = await this.authService.hashPassword(user.password);
       const newUser: CreateUserDTO = new CreateUserDTO();
       newUser.login = user.login;
       newUser.password = hashPasswordNewUser;
@@ -45,10 +45,13 @@ export class UserService {
     return this.filter(findUser);
   }
 
-  async findAll(): Promise<any> {
-    let findUsers = await this.userModel.find().exec();
+  async findAll(): Promise<UserResponse[]> {
+    const findUsers = await this.userModel.find().exec();
+    const returnUsersWithoutPassword = findUsers.map((user) => {
+      return this.filter(user);
+    })
 
-    return findUsers;
+    return returnUsersWithoutPassword;
   }
 
   async updateUser(id: any, user: CreateUserDTO): Promise<UserResponse> {
@@ -56,7 +59,7 @@ export class UserService {
     return this.filter(updateUser);
   }
 
-  async deleteUser(id: any): Promise<any> {
+  async deleteUser(id: any): Promise<UserResponse> {
     const deletedUser = await this.userModel.findByIdAndDelete({_id: id});
     return this.filter(deletedUser);
   }
@@ -76,7 +79,7 @@ export class UserService {
     if(!findUser) {
       throw new HttpException('Invalid credentials!', HttpStatus.NOT_FOUND);
     }
-    const validate = await this.authService.comparePasswords(password, findUser.password);
+    const validate: boolean = await this.authService.comparePasswords(password, findUser.password);
     if(validate) {
       return this.filter(findUser);
     } else {
@@ -86,6 +89,7 @@ export class UserService {
 
   async findByLogin(login: string): Promise<IUser> {
     const findUserByLogin = await this.userModel.findOne({login});
+    
     return findUserByLogin;
   }
 

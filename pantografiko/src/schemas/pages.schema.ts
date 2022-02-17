@@ -1,10 +1,22 @@
 import * as mongoose from 'mongoose';
 
 export const PagesSchema = new mongoose.Schema({
-  loginUserID: String,
-  locomotiveNumber: String,
-  collectorNumber: Number,
-  inspectionDate: String,
+  loginUserID: {
+    type: String,
+    required: true
+  },
+  locomotiveNumber: {
+    type: String,
+    required: true
+  },
+  collectorNumber: {
+    type: Number,
+    required: true
+  },
+  inspectionDate: {
+    type: String,
+    required: true
+  },
   collectorType: Number,
   frontOrRear: Number,
   overlayThickness1: String,
