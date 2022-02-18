@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { Route, Routes } from 'react-router';
 import { StoreContext } from '../../store/StoreProvider';
-import './Component.css';
 import Inspections from '../inspections/Inspections';
 import InspectionItem from '../inspectionItem/InspectionItem';
 import InspectionAddForm from '../inspectionAddForm/InspectionAddForm';
