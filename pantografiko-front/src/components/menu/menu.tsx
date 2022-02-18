@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import { StoreContext } from '../../store/StoreProvider';
 import './menu.css';
-import FormInspection from '../formInspection/FormInspection';
-import DisplayInspection from '../displayInspection/DisplayInspection';
+// import FormInspection from '../formInspection/FormInspection';
+// import DisplayInspection from '../displayInspection/DisplayInspection';
+import MenuNav from '../menuNav/MenuNav';
 
 const Menu = () => {
 
@@ -15,8 +16,9 @@ const Menu = () => {
   const validateUser = (isUserLogged && isUserProperToken && !startPageIsOpen) ? 
   (<section className='menu-style'>
       <p>Menu</p>
-      <FormInspection />
-      <DisplayInspection />
+      {/* <FormInspection />
+      <DisplayInspection /> */}
+      <MenuNav/>
   </section>) : null;
 
   return (

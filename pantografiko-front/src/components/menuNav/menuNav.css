@@ -1,0 +1,13 @@
+.menu-style-links {
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-right: 1px solid white;
+    border-bottom: 1px solid white;
+  }
+  
+.menu-style-links a {
+    display: block;
+    text-decoration: none;
+    color: white;
+  }
