@@ -2,7 +2,6 @@
   margin: auto;
   padding: 15px;
   width: 800px;
-  /* background-color: black; */
   color: white;
   display: flex;
   flex-direction: column;
@@ -17,14 +16,40 @@
   background-color: darkgray;
 }
 
-.return-item a{
- text-decoration: none;
- color: black;
- transition: .3s;
+.return-item {  
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  border: 2px solid black;
+  font-weight: bold;
+  transition: .3s;
+  width: 200px;
 }
 
-.all-block-edit button:hover a {
+.return-item:nth-child(2) {
+  padding: 2px 60px;
+}
+
+.return-item a{
+  display: block;
+  text-decoration: none;
+  color: black;
+  transition: .3s;
+}
+
+.return-item:nth-child(1) a {
+  padding: 2px 60px;
+}
+
+.all-block-edit:nth-last-child(1) {
+  display: flex;
+  justify-content: center;
+}
+
+
+.return-item:hover, .return-item:hover a {
   color: white;
+  background-color: black;
 }
 
 .return-item a:hover{

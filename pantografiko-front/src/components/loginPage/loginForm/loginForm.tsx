@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from 'react';
-// import req from '../../../helpers/request';
 import { StoreContext } from '../../../store/StoreProvider';
 import './loginForm.css';
 import { loginAuth } from '../../../services/auth.service';

@@ -30,10 +30,6 @@ const InspectionItemEdit = () => {
   const { inspectionID } = useParams();
   let navigate = useNavigate();
 
-  // useEffect(()=> {
-  //   setInspection([]);
-  // },[]);
-
   useEffect(() => {
     const fetchOneInspection = async () => {
       let item: any;
@@ -129,7 +125,6 @@ const InspectionItemEdit = () => {
 
     if(typeof collectorNumber !== 'number' || collectorNumber === NaN) {
       setMessageValidation('Numer odbieraka musi być typu liczbowego');
-      // console.log(typeof collectorNumber);
       validateVariable = false;
       return validateVariable;
     }
@@ -185,7 +180,7 @@ const InspectionItemEdit = () => {
   const handleOnSubmitInspection = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // if(validateInputs()) {
+    if(validateInputs()) {
 
     let result;
     console.log(result);
@@ -209,12 +204,11 @@ const InspectionItemEdit = () => {
       reasonReplaceCurrentCollector,
       maintenanceActivities
     }).then(response => console.log(response));
-    // .catch(err => console.log(err));
     console.log(result);
     resetInputs();
     setInspection([]);
     navigate(`/display/${inspectionID}`);
-    // }
+    }
     
   }
 
@@ -364,10 +358,11 @@ const InspectionItemEdit = () => {
             <textarea value={maintenanceActivities} onChange={handleOnChangeMaintenanceActivities} placeholder={item.maintenanceActivities} ></textarea>
           </label>
         </div>
-        <div className="all-block-edit btn-form-add">
-          <button onClick={handleOnChangeCleanInspection} className='return-item'><Link to={`/display/${item._id}`}>Wróć</Link></button>
+        <div className="all-block-edit ">
+          <button onClick={handleOnChangeCleanInspection} className='return-item'>
+            <Link to={`/display/${item._id}`}>Wróć</Link>
+          </button>
           <button type='submit' className='return-item'>Aktualizuj</button>
-          {/* <button type='submit' className='return-item'><Link to={`/display/${item._id}`}>Aktualizuj</Link></button> */}
         </div>
     </form>
   )}) : 'Error';

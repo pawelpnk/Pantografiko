@@ -23,6 +23,8 @@ const InspectionAddForm = () => {
   const [reasonReplaceCurrentCollector, setReasonReplaceCurrentCollector] = useState<string>('');
   const [maintenanceActivities, setMaintenanceActivities] = useState<string>('');
 
+  const [messageValidation, setMessageValidation] = useState<string>('');
+
   const handleOnChangeLocomotiveNumber = (event: ChangeEvent<HTMLInputElement>) => setLocomotiveNumber(event.target.value.toUpperCase());
   const handleOnChangeCollectorNumber = (event: ChangeEvent<HTMLInputElement>) => {
     if(+event.target.value) {
@@ -86,16 +88,6 @@ const InspectionAddForm = () => {
   const handleOnChangeReasonReplaceCurrentCollector = (event: ChangeEvent<HTMLTextAreaElement>) => setReasonReplaceCurrentCollector(event.target.value);
   const handleOnChangeMaintenanceActivities = (event: ChangeEvent<HTMLTextAreaElement>) => setMaintenanceActivities(event.target.value);
 
-  const [messageValidation, setMessageValidation] = useState<string>('');
-
-  // const handleOnChangeAllForString = (functionVariable, event) => {
-  //   functionVariable(event.target.value)
-  // }
-
-  // const handleOnChangeAllForNumber = (functionVariable, event) => {
-  //   functionVariable(+event.target.value)
-  // }
-
   const resetInputs = () => {
     setLocomotiveNumber('');
     setCollectorNumber('');
@@ -125,7 +117,6 @@ const InspectionAddForm = () => {
     }
     if(typeof collectorNumber !== 'number') {
       setMessageValidation('Numer odbieraka musi być typu liczbowego');
-      // console.log(typeof collectorNumber);
       validateVariable = false;
       return validateVariable;
     }
@@ -230,7 +221,7 @@ const InspectionAddForm = () => {
         <div className="all-form-block">
           <label>
             <h4>Data przeglądu</h4>
-            <input onChange={handleOnChangeInspectionDate} type="text" value={inspectionDate} />
+            <input onChange={handleOnChangeInspectionDate} type="text" value={inspectionDate} placeholder="dd-mm-rrrr" />
           </label>
         </div>
         <div className="all-form-block">

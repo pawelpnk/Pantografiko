@@ -9,9 +9,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 function App() {
 
-  // const { token } = useContext(StoreContext);
-
-
   return (
     <div className="App">
       <StoreProvider>
@@ -19,7 +16,6 @@ function App() {
         <Router>
         <Header />
           <div className="wrapper">
-            {/* <Login /> */}
             <Menu />            
             <Content />            
           </div>

@@ -62,13 +62,13 @@ const Inspections = () => {
       <p>Numer lokomotywy: {inspection.locomotiveNumber}</p>
       <p>Data przeglądu: {inspection.inspectionDate}</p>      
       <p>Numer przeglądu: {inspection.inspectionOfNumber}</p>
-      <button onClick={handleOnClickCleanFetch} className='link-inspection'>
-        <Link to={`/display/${inspection._id}`}>Przejdź do szczegółów</Link>
-      </button>
+      {/* <button onClick={handleOnClickCleanFetch} className='link-inspection'> */}
+        <Link onClick={handleOnClickCleanFetch} className={'link-inspection'} to={`/display/${inspection._id}`}>Przejdź do szczegółów</Link>
+      {/* </button> */}
       <button onClick={() => deleteItem(inspection)} className='delete-inspection'>Usuń</button>
-      <button className='update-inspection'>
-        <Link to={`/display/edit/${inspection._id}`}>Edytuj</Link>
-      </button>
+      {/* <button className='update-inspection'> */}
+        <Link className='update-inspection' to={`/display/edit/${inspection._id}`}>Edytuj</Link>
+      {/* </button> */}
     </div>
     )
   });

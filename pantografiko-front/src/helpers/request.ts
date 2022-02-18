@@ -5,10 +5,8 @@ const BASE_URL = 'http://localhost:5000';
 
 const req = axios.create({
   baseURL: BASE_URL,
-  // validateStatus: () => false 
   headers: {
     'Content-Type': 'application/json',
-
   }
 });
 

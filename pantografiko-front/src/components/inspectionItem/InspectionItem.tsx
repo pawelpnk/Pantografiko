@@ -14,16 +14,13 @@ const InspectionItem = () => {
       let item: any;
       item = await req.get(`pages/fetch/${inspectionID}`);
       setInspection(item.data.inspection);
-      // console.log(item.data.inspection);
     }
     fetchOneInspection();
-    // console.log(item);
   },[])
 
   const deleteItem = async () => {
     await req.delete(`pages/delete/${inspectionID}`);
     setInspection([]);
-    // console.log('ok');
   }
 
   const renderInspection = inspection.length > 0 ? inspection.map((item: any)=>{
@@ -50,12 +47,12 @@ const InspectionItem = () => {
         <p>Przyczyna wymiany nakładki ślizgowej: {item.reasonReplaceSlidePlate}</p>
         <p>Przyczyna wymiany odbieraka prądu: {item.reasonReplaceCurrentCollector}</p>
         <p>Dodatkowe informacje związane z czynnościami obsługowymi: {item.maintenanceActivities}</p>
-        <button onClick={deleteItem} className='delete-inspection2'><Link to={`/display`}>Usuń</Link></button>
-        <button className='update-inspection2'><Link to={`/display/edit/${item._id}`}>Edytuj</Link></button>
-        <button className="return-page"><Link to="/display">Wróć</Link></button>
+        <button onClick={deleteItem} className='delete-inspection2 one-inspection'><Link to={`/display`}>Usuń</Link></button>
+        <button className='update-inspection2 one-inspection'><Link to={`/display/edit/${item._id}`}>Edytuj</Link></button>
+        <button className="return-page one-inspection"><Link to="/display">Wróć</Link></button>
       </div>
     )
-  }) : 'Loading';
+  }) : 'Loading...';
 
   return (
     <div className='inspections-display-page-inside'>
