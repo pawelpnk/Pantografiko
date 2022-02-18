@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { Line } from 'react-chartjs-2';
 import { Chart, registerables} from 'chart.js';
 
-const Inspections = () => {
+const Inspections: React.FC = (): JSX.Element => {
   const [inspections, setInspections] = React.useState<any>([]);
   const [filterInsp, setFilterInsp] = React.useState<any>([]);
   const [locomotiveNumber, setLocomotiveNumber] = React.useState<string | number>('');
@@ -46,13 +46,11 @@ const Inspections = () => {
       <p>Numer lokomotywy: {inspection.locomotiveNumber}</p>
       <p>Data przeglądu: {inspection.inspectionDate}</p>      
       <p>Numer przeglądu: {inspection.inspectionOfNumber}</p>
-      <button onClick={handleOnClickCleanFetch} className='link-inspection'>
-        <Link to={`/display/${inspection._id}`}>Przejdź do szczegółów</Link>
-      </button>
+      <Link onClick={handleOnClickCleanFetch} className={'link-inspection'} to={`/display/${inspection._id}`}>
+        Przejdź do szczegółów
+      </Link>      
       <button onClick={() => deleteItem(inspection)} className='delete-inspection'>Usuń</button>
-      <button className='update-inspection'>
-        <Link to={`/display/edit/${inspection._id}`}>Edytuj</Link>
-      </button>
+      <Link className='update-inspection' to={`/display/edit/${inspection._id}`}>Edytuj</Link> 
     </div>
     )
   }) : inspections.map((inspection: any) =>{
@@ -62,26 +60,24 @@ const Inspections = () => {
       <p>Numer lokomotywy: {inspection.locomotiveNumber}</p>
       <p>Data przeglądu: {inspection.inspectionDate}</p>      
       <p>Numer przeglądu: {inspection.inspectionOfNumber}</p>
-      {/* <button onClick={handleOnClickCleanFetch} className='link-inspection'> */}
-        <Link onClick={handleOnClickCleanFetch} className={'link-inspection'} to={`/display/${inspection._id}`}>Przejdź do szczegółów</Link>
-      {/* </button> */}
+      <Link onClick={handleOnClickCleanFetch} className={'link-inspection'} to={`/display/${inspection._id}`}>
+        Przejdź do szczegółów
+      </Link>      
       <button onClick={() => deleteItem(inspection)} className='delete-inspection'>Usuń</button>
-      {/* <button className='update-inspection'> */}
-        <Link className='update-inspection' to={`/display/edit/${inspection._id}`}>Edytuj</Link>
-      {/* </button> */}
+      <Link className='update-inspection' to={`/display/edit/${inspection._id}`}>Edytuj</Link>      
     </div>
     )
   });
 
   const handleOnChangeLocomotiveNumber = (e: React.ChangeEvent<HTMLInputElement>) => setLocomotiveNumber(e.target.value.toUpperCase());
-  const handleOnChangeCollectorNumber = (e: React.ChangeEvent<HTMLInputElement>) =>  {
+  const handleOnChangeCollectorNumber = (e: React.ChangeEvent<HTMLInputElement>): void =>  {
     if(+e.target.value) {
       setCollectorNumber(+e.target.value)
     } else {
       setCollectorNumber('');
     }
   }
-  const handleOnChangeFrontOrRear = (e: React.ChangeEvent<HTMLInputElement>) =>  {
+  const handleOnChangeFrontOrRear = (e: React.ChangeEvent<HTMLInputElement>): void =>  {
     if(+e.target.value) {
       setFrontOrRear(+e.target.value)
     } else {
@@ -89,7 +85,7 @@ const Inspections = () => {
     }
   }
 
-  const filterInputsAndSetsDataForDiagram = () => {
+  const filterInputsAndSetsDataForDiagram = (): void => {
     let filtersInspection = inspections;
 
     if(locomotiveNumber && collectorNumber && frontOrRear) {
@@ -142,8 +138,7 @@ const Inspections = () => {
         return item.frontOrRear === frontOrRear;
       })
     }
-    setFilterInsp(filtersInspection);
-    
+    setFilterInsp(filtersInspection);    
   }
 
   useEffect(()=> {
@@ -186,7 +181,7 @@ const Inspections = () => {
     });
   },[filterInsp])
 
-  const handleOnClickDrawDiagram = () => {
+  const handleOnClickDrawDiagram = (): void => {
     setActiveDiagram(prevValue => !prevValue);
     // if(filterInsp){
     //   setFilterInsp('');

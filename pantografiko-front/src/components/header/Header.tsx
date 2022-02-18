@@ -5,12 +5,12 @@ import { logout } from '../../services/auth.service';
 import { Link } from 'react-router-dom';
 import { removeUserLogin} from '../../helpers/saveLocalStorage';
 
-const Header = () => {
+const Header: React.FC = (): JSX.Element => {
   const { user, setUser} = useContext(StoreContext);
 
   const setProperlyLabel: string | null = user ? 'Logout' : null;
 
-  const handleOnButton = () => {
+  const handleOnButton = (): void => {
     logout();
     setUser(false);
     removeUserLogin();

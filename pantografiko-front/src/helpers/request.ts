@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getCurrentUser } from '../services/auth.service';
 
-const BASE_URL = 'http://localhost:5000';
+const BASE_URL: string = 'http://localhost:5000';
 
 const req = axios.create({
   baseURL: BASE_URL,

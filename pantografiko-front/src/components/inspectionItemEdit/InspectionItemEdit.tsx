@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import req from '../../helpers/request';
 import './InspectionItemEdit.css';
 
-const InspectionItemEdit = () => {
-  const [inspection, setInspection] = useState<any>([]);
+const InspectionItemEdit: React.FC = (): JSX.Element => {
+  const [inspection, setInspection] = useState<object[]>([]);
   const [collectorNumber, setCollectorNumber] = useState<string | number>('');
   const [inspectionDate, setInspectionDate] = useState<string>('');
   const [collectorType, setCollectorType] = useState<number | string>('');
@@ -31,7 +31,7 @@ const InspectionItemEdit = () => {
   let navigate = useNavigate();
 
   useEffect(() => {
-    const fetchOneInspection = async () => {
+    const fetchOneInspection = async (): Promise<void> => {
       let item: any;
       item = await req.get(`pages/fetch/${inspectionID}`);
       setInspection(item.data.inspection);
@@ -39,7 +39,7 @@ const InspectionItemEdit = () => {
     fetchOneInspection();    
   },[])
 
-  const handleOnChangeCollectorNumber = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleOnChangeCollectorNumber = (e: ChangeEvent<HTMLInputElement>): void => {
     if(+e.target.value) {
       setCollectorNumber(+e.target.value);
     } else {
@@ -50,17 +50,17 @@ const InspectionItemEdit = () => {
   const handleOnChangeInspectionDate  = (event: ChangeEvent<HTMLInputElement>) => setInspectionDate(event.target.value);
   const handleOnChangeCollectorType = (event: ChangeEvent<HTMLSelectElement>) => setCollectorType(event.target.value);
   const handleOnChangeFrontOrRear = (event: ChangeEvent<HTMLSelectElement>) => setFrontOrRear(event.target.value);
-  const handleOnChangeOverlayThickness1 = (event: ChangeEvent<HTMLInputElement>) =>      setOverlayThickness1(event.target.value);      
+  const handleOnChangeOverlayThickness1 = (event: ChangeEvent<HTMLInputElement>) => setOverlayThickness1(event.target.value);      
   const handleOnChangeOverlayThickness2 = (event: ChangeEvent<HTMLInputElement>) =>    
   setOverlayThickness2(event.target.value);
-  const handleOnChangetimeOfLiftingTheCurrentCollector = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleOnChangetimeOfLiftingTheCurrentCollector = (event: ChangeEvent<HTMLInputElement>): void => {
     if(+event.target.value) {
       setTimeOfLiftingTheCurrentCollector(+event.target.value);
       } else {
         setTimeOfLiftingTheCurrentCollector('');
       }
   }; 
-  const handleOnChangefallTimeOfTheCurrentCollector = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleOnChangefallTimeOfTheCurrentCollector = (event: ChangeEvent<HTMLInputElement>): void => {
     if(+event.target.value) {
       setFallTimeOfTheCurrentCollector(+event.target.value);
       } else {
@@ -68,21 +68,21 @@ const InspectionItemEdit = () => {
       }   
   };
   const handleOnChangeCorrectOperationOfTheCollectorFromTwoCabins = (event: ChangeEvent<HTMLSelectElement>) => setCorrectOperationOfTheCollectorFromTwoCabins(event.target.value);
-  const handleOnChangeAverageStaticPressure = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleOnChangeAverageStaticPressure = (event: ChangeEvent<HTMLInputElement>): void => {
     if(+event.target.value) {
       setAverageStaticPressure(+event.target.value);
       } else {
         setAverageStaticPressure('');
       }   
   };
-  const handleOnChangeForceDifferenceWhenLiftingAndLowering = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleOnChangeForceDifferenceWhenLiftingAndLowering = (event: ChangeEvent<HTMLInputElement>): void => {
     if(+event.target.value) {
       setForceDifferenceWhenLiftingAndLowering(+event.target.value);
       } else {
         setForceDifferenceWhenLiftingAndLowering('');
       }   
   }; 
-  const handleOnChangeHoldingForceMeasurement = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleOnChangeHoldingForceMeasurement = (event: ChangeEvent<HTMLInputElement>): void => {
     if(+event.target.value) {
       setHoldingForceMeasurement(+event.target.value);
       } else {
@@ -90,7 +90,7 @@ const InspectionItemEdit = () => {
       }   
   }; 
   const handleOnChangeCheckThedegreeOfWearOfTheContactInsertsOfTheSlider = (event: ChangeEvent<HTMLInputElement>) => setCheckThedegreeOfWearOfTheContactInsertsOfTheSlider(event.target.value);
-  const handleOnChangeInsulationResistanceMeasurement = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleOnChangeInsulationResistanceMeasurement = (event: ChangeEvent<HTMLInputElement>): void => {
     if(+event.target.value) {
       setInsulationResistanceMeasurement(+event.target.value);
       } else {
@@ -102,7 +102,7 @@ const InspectionItemEdit = () => {
   const handleOnChangeReasonReplaceCurrentCollector = (event: ChangeEvent<HTMLTextAreaElement>) => setReasonReplaceCurrentCollector(event.target.value);
   const handleOnChangeMaintenanceActivities = (event: ChangeEvent<HTMLTextAreaElement>) => setMaintenanceActivities(event.target.value); 
   
-  const resetInputs = () => {
+  const resetInputs = (): void => {
     setCollectorNumber('');
     setInspectionDate('');
     setOverlayThickness1('');
@@ -119,7 +119,7 @@ const InspectionItemEdit = () => {
     setMessageValidation('');
   }
 
-  const validateInputs = () => {
+  const validateInputs = (): boolean => {
     let validateVariable = true;
     setMessageValidation('');
 
@@ -177,7 +177,7 @@ const InspectionItemEdit = () => {
     return validateVariable;
   }
 
-  const handleOnSubmitInspection = async (e: React.FormEvent) => {
+  const handleOnSubmitInspection = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
 
     if(validateInputs()) {
@@ -212,19 +212,19 @@ const InspectionItemEdit = () => {
     
   }
 
-  const handleOnChangeCleanInspection = () => {
+  const handleOnChangeCleanInspection = (): void => {
     resetInputs();
     setInspection([]);
   }
 
-  const checkMessageValidation = messageValidation.length > 0 ? <p className='validation-message-form-add'>{messageValidation}</p> : null;
+  const checkMessageValidation: JSX.Element | null = messageValidation.length > 0 ? <p className='validation-message-form-add'>{messageValidation}</p> : null;
 
   useEffect(()=> {
     resetInputs();
   },[])
   
 
-  const renderEditInspection = inspection.length > 0 ? inspection.map((item: any) => {
+  const renderEditInspection: JSX.Element[] | string = inspection.length > 0 ? inspection.map((item: any) => {
     return (
     <form className="inspection-block-edit" key={item._id} onSubmit={handleOnSubmitInspection}>
       {checkMessageValidation}

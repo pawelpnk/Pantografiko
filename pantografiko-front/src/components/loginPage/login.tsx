@@ -6,7 +6,7 @@ import LoginForm from './loginForm/loginForm';
 
 
 
-const Login = () => {
+const Login: React.FC = (): JSX.Element => {
   const { user, token } = useContext(StoreContext);
 
   const startPage = (

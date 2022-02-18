@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent, useEffect} from 'react';
 import req from '../../helpers/request';
 import './inspectionAddForm.css';
 
-const InspectionAddForm = () => {
+const InspectionAddForm: React.FC = (): JSX.Element => {
   const [locomotiveNumber, setLocomotiveNumber] = useState<string>('');
   const [collectorNumber, setCollectorNumber] = useState<number | string>(0);
   const [inspectionDate, setInspectionDate] = useState<string>('');
@@ -36,7 +36,7 @@ const InspectionAddForm = () => {
   const handleOnChangeInspectionDate  = (event: ChangeEvent<HTMLInputElement>) => setInspectionDate(event.target.value);
   const handleOnChangeCollectorType = (event: ChangeEvent<HTMLSelectElement>) => setCollectorType(event.target.value);
   const handleOnChangeFrontOrRear = (event: ChangeEvent<HTMLSelectElement>) => setFrontOrRear(event.target.value);
-  const handleOnChangeOverlayThickness1 = (event: ChangeEvent<HTMLInputElement>) =>      setOverlayThickness1(event.target.value);      
+  const handleOnChangeOverlayThickness1 = (event: ChangeEvent<HTMLInputElement>) => setOverlayThickness1(event.target.value);      
   const handleOnChangeOverlayThickness2 = (event: ChangeEvent<HTMLInputElement>) =>    
   setOverlayThickness2(event.target.value);
   const handleOnChangetimeOfLiftingTheCurrentCollector = (event: ChangeEvent<HTMLInputElement>) => {
@@ -88,7 +88,7 @@ const InspectionAddForm = () => {
   const handleOnChangeReasonReplaceCurrentCollector = (event: ChangeEvent<HTMLTextAreaElement>) => setReasonReplaceCurrentCollector(event.target.value);
   const handleOnChangeMaintenanceActivities = (event: ChangeEvent<HTMLTextAreaElement>) => setMaintenanceActivities(event.target.value);
 
-  const resetInputs = () => {
+  const resetInputs = (): void => {
     setLocomotiveNumber('');
     setCollectorNumber('');
     setInspectionDate('');
@@ -106,7 +106,7 @@ const InspectionAddForm = () => {
     setMessageValidation('');
   }
 
-  const validateInputs = () => {
+  const validateInputs = (): boolean => {
     let validateVariable = true;
     setMessageValidation('');
 
@@ -165,7 +165,7 @@ const InspectionAddForm = () => {
     return validateVariable;
   }
 
-  const handleOnSubmitInspection = async (e: React.FormEvent) => {
+  const handleOnSubmitInspection = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
 
     if(validateInputs()) {
@@ -196,7 +196,7 @@ const InspectionAddForm = () => {
     
   }
 
-  const checkMessageValidation = messageValidation.length > 0 ? <p className='validation-message-form-add'>{messageValidation}</p> : null;
+  const checkMessageValidation: JSX.Element | null = messageValidation.length > 0 ? <p className='validation-message-form-add'>{messageValidation}</p> : null;
 
   useEffect(()=> {
     resetInputs();

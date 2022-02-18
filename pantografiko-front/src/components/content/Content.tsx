@@ -8,10 +8,10 @@ import InspectionItemEdit from '../inspectionItemEdit/InspectionItemEdit';
 import NotFoundPage from '../notFoundPage/NotFoundPage';
 import Login from '../loginPage/login';
 
-const Content = () => {
+const Content: React.FC = (): JSX.Element => {
   const { user, token } = useContext(StoreContext);
 
-  const isUserLogged = Boolean(user) && Boolean(token);
+  const isUserLogged: boolean = Boolean(user) && Boolean(token);
 
   return (
       <Routes>

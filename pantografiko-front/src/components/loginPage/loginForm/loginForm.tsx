@@ -19,13 +19,13 @@ const LoginForm: React.FC = (): JSX.Element => {
     setPassword(event.target.value);
   }
 
-  const resetInputs = () => {
+  const resetInputs = (): void => {
     setLogin('');
     setPassword('');
     setValidateMessage('');
   }
 
-  const handleOnSubmit = async (event: React.FormEvent) => {
+  const handleOnSubmit = async (event: React.FormEvent): Promise<void> => {
     event.preventDefault();
     
   try {
@@ -39,13 +39,14 @@ const LoginForm: React.FC = (): JSX.Element => {
       setValidateMessage('Bad login or password');
     }
   }
+
   useEffect(() => {
     if(user) {
       resetInputs();
     }
   }, [user]);
 
-  const validateMessageSubmit = validateMessage.length > 0 ? <p className='validate-message'>{validateMessage}</p> : null;
+  const validateMessageSubmit: JSX.Element | null = validateMessage.length > 0 ? <p className='validate-message'>{validateMessage}</p> : null;
 
   return (
     <form method='post' className='login-form' onSubmit={handleOnSubmit}>

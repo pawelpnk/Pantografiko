@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import './menuNav.css';
 
-const MenuNav = () => {
+const MenuNav: React.FC = (): JSX.Element => {
   return (
     <>
       <nav>

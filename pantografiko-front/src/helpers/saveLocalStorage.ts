@@ -1,13 +1,13 @@
-const saveUserLogin = (login: string) => {
+const saveUserLogin = (login: string): void => {
   localStorage.setItem('login', JSON.stringify(login));
 }
 
-const fetchUserLogin = ():any => {
-  const fetchUser = JSON.parse(localStorage.getItem("login") || 'null');
+const fetchUserLogin = (): string => {
+  const fetchUser: string = JSON.parse(localStorage.getItem("login") || 'null');
   return fetchUser;
 }
 
-const removeUserLogin = () => {
+const removeUserLogin = (): void => {
   return localStorage.removeItem("login");
 }
 
