@@ -5,13 +5,12 @@ import MenuNav from '../menuNav/MenuNav';
 
 const Menu = () => {
 
-  const { token, user, isLoginPageOpen } = useContext(StoreContext);
+  const { token, user } = useContext(StoreContext);
 
   const isUserLogged = Boolean(user);
   const isUserProperToken = Boolean(token);
-  const startPageIsOpen = Boolean(isLoginPageOpen);
 
-  const validateUser = (isUserLogged && isUserProperToken && !startPageIsOpen) ? 
+  const validateUser = (isUserLogged && isUserProperToken) ? 
   (<section className='menu-style'>
       <p>Menu</p>
       <MenuNav/>

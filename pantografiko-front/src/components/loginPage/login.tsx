@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { statePageLogin } from '../../helpers/saveLocalStorage';
 import { StoreContext } from '../../store/StoreProvider';
 import './login.css';
 import LoginForm from './loginForm/loginForm';
@@ -8,27 +7,20 @@ import LoginForm from './loginForm/loginForm';
 
 
 const Login = () => {
-  const { user, token, isLoginPageOpen, setIsLoginPageOpen } = useContext(StoreContext);
+  const { user, token } = useContext(StoreContext);
 
-  const handleOnClickClosePageLogin = () => {
-    setIsLoginPageOpen(false);
-    statePageLogin(false);
-  };
-
-  const startPage = isLoginPageOpen ? (
+  const startPage = (
     <div className='login-style'>
         {(user && token ) ? (
           <div className="welcome">
             <h2>Witaj, {user}</h2>
-              <button onClick={handleOnClickClosePageLogin}>
-                <Link to='/display'>Ok</Link>
-              </button>
+            <Link to='/display'>Przejdź dalej</Link>
           </div>
         ) : (
           <LoginForm />
         )}
       </div>
-  ) : null;
+  );
 
   return (
       <>
