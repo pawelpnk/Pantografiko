@@ -4,6 +4,7 @@ import './Header.css';
 import { logout } from '../../services/auth.service';
 import { Link } from 'react-router-dom';
 import { removeUserLogin} from '../../helpers/saveLocalStorage';
+import HeaderUserMenu from './headerUserMenu/HeaderUserMenu';
 
 const Header: React.FC = (): JSX.Element => {
   const { user, setUser} = useContext(StoreContext);
@@ -19,7 +20,7 @@ const Header: React.FC = (): JSX.Element => {
   return (
     <header className='header'>
       <h1>Pantografiko - Twoja aplikacja do zbierania danych!</h1>
-      {user && <p>{user}</p>}
+      {user && <HeaderUserMenu user={user}/>}
       {user && 
       <Link onClick={handleOnButton} to="/">{setProperlyLabel}</Link>}
     </header>

@@ -1,0 +1,49 @@
+.p-header {
+    margin-left: auto;
+    margin-right: 15px;
+    font-size: 15px;
+    color:blue;    
+    cursor: pointer;
+    justify-content: flex-end;
+    position: relative;
+    padding-left: 15px;
+  }
+
+  .p-header p {
+    font-weight: bold;
+  }
+
+  .p-header nav {
+      left: 0;
+      position: absolute;
+      padding-top: 10px;
+      background-color: gray;
+      border-radius: 15px;
+      transform: scale(0);
+  }
+
+  .p-header .nav-open {
+    transform: scale(1);
+  }
+
+  .p-header nav ul {
+      list-style: none;
+  }
+
+  .li-user a {
+      display: block;
+      text-decoration: none;
+      width: 100%;
+      font-size: 15px;
+      padding: 7px 10px;
+  }
+
+  .li-user:nth-last-child(1) a {
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
+
+  .li-user a:hover {
+      background-color: darkgray;
+      color: white;
+  }

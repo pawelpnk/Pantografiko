@@ -6,6 +6,7 @@ import { HttpException, Injectable, HttpStatus, forwardRef, Inject } from '@nest
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { AuthService } from 'src/auth/auth.service';
+import { changePassword } from 'src/dto/changePassword';
 
 @Injectable()
 export class UserService {
@@ -82,6 +83,7 @@ export class UserService {
     const validate: boolean = await this.authService.comparePasswords(password, findUser.password);
     if(validate) {
       return this.filter(findUser);
+      // return findUser;
     } else {
       throw new HttpException('Bad login or password', HttpStatus.UNAUTHORIZED);
     }
@@ -96,6 +98,24 @@ export class UserService {
   async findByEmail(email: string): Promise<IUser> {
     const findUserByEmail = await this.userModel.findOne({email});
     return findUserByEmail;
+  }
+
+  async findID(login:string): Promise<string> {
+    const findID = await this.userModel.findOne({login});
+    const { _id: id } = findID;
+    return id;
+  }
+
+  async setNewPassword(body: changePassword): Promise<UserResponse | string>{
+    const findUserWithOldPassword: UserResponse = await this.validateUser(body.login, body.password);
+    const findUserID: string = await this.findID(body.login);
+    if(findUserWithOldPassword){
+      const hashPassword: string = await this.authService.hashPassword(body.newPassword);
+      const changePasswordUser = await this.userModel.findByIdAndUpdate({_id: findUserID}, {password: hashPassword});
+      return this.filter(changePasswordUser);
+    } else {
+      return 'Wrong password'
+    }
   }
 
 }

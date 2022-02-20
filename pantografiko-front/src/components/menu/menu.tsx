@@ -7,8 +7,8 @@ const Menu = () => {
 
   const { token, user } = useContext(StoreContext);
 
-  const isUserLogged = Boolean(user);
-  const isUserProperToken = Boolean(token);
+  const isUserLogged: boolean = Boolean(user);
+  const isUserProperToken: boolean = Boolean(token);
 
   const validateUser = (isUserLogged && isUserProperToken) ? 
   (<section className='menu-style'>

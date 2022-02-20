@@ -203,8 +203,8 @@ const InspectionItemEdit: React.FC = (): JSX.Element => {
       reasonReplaceSlidePlate,
       reasonReplaceCurrentCollector,
       maintenanceActivities
-    }).then(response => console.log(response));
-    console.log(result);
+    })
+    // .then(response => console.log(response));
     resetInputs();
     setInspection([]);
     navigate(`/display/${inspectionID}`);

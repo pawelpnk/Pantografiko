@@ -1,9 +1,10 @@
 import { loginUser } from './../dto/loginUser.dto';
-import { Body, Controller, Get, HttpStatus, Post, Res, Param, NotFoundException, HttpException, UseGuards, HttpCode } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Post, Res, Param, NotFoundException, HttpException, UseGuards, HttpCode, Patch } from '@nestjs/common';
 import { CreateUserDTO } from 'src/dto/create-user.dto';
 import { UserService } from './user.service';
 import { Response } from 'express';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
+import { changePassword } from 'src/dto/changePassword';
 
 @Controller('/')
 export class UserController {
@@ -55,9 +56,20 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   @Get('/users/:user')
   async getOneUser(
-    @Param('user') id
+    @Param('user') id: string
   ) {
     const user = await this.userService.findOne(id);
     return user;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch('/users/password')
+  async changePassword(
+    @Body() body: changePassword
+  ) {
+    const newPassword = await this.userService.setNewPassword(body);
+    if(newPassword){
+      return 'Password changed';
+    }    
   }
 }
