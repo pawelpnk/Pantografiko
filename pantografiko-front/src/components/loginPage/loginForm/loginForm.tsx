@@ -10,7 +10,7 @@ const LoginForm: React.FC = (): JSX.Element => {
   const [password, setPassword] = React.useState<string>('');
   const [validateMessage, setValidateMessage] = React.useState<string>('');
 
-  const { user, setUser, setToken } = useContext(StoreContext);
+  const { user, setUser, setToken, setUserObject, setUserID } = useContext(StoreContext);
 
   const handleOnChangeLogin = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLogin(event.target.value);
@@ -34,6 +34,8 @@ const LoginForm: React.FC = (): JSX.Element => {
         setUser(login);
         setToken(data.data.accessToken);
         saveUserLogin(login);
+        setUserID(data.data.findUserID);
+        setUserObject(data.data.findUser);
       }
     } catch {
       setValidateMessage('Bad login or password');

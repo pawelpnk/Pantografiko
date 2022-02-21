@@ -5,6 +5,7 @@ import { UserService } from './user.service';
 import { Response } from 'express';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
 import { changePassword } from 'src/dto/changePassword';
+import { userResponseLogin } from 'src/dto/userResponseLogin.dto';
 
 @Controller('/')
 export class UserController {
@@ -33,11 +34,11 @@ export class UserController {
     @Res() res: Response
   ) {
     try {
-      const jwt: string = await this.userService.login(bodyLogin);
+      const userReturn: userResponseLogin = await this.userService.login(bodyLogin);
       return res.status(HttpStatus.OK).json({
-        accessToken: jwt,
-        token_type: 'JWT',
-        expires_in: process.env.EXPIRESIN
+        accessToken: userReturn.generateJWT,
+        findUser: userReturn.findUser,
+        findUserID: userReturn.findUserID
       })
     } catch {
       return res.status(400).json({
@@ -61,6 +62,15 @@ export class UserController {
     const user = await this.userService.findOne(id);
     return user;
   }
+
+  // @UseGuards(JwtAuthGuard)
+  // @Get('/users/loginUser')
+  // async fetchOneUser(
+  //   @Body() login: string
+  // ) {
+  //   const user = await this.userService.findOneWithLogin(login);
+  //   return user;
+  // }
 
   @UseGuards(JwtAuthGuard)
   @Patch('/users/password')

@@ -3,7 +3,7 @@ import { StoreContext } from '../../store/StoreProvider';
 import './Header.css';
 import { logout } from '../../services/auth.service';
 import { Link } from 'react-router-dom';
-import { removeUserLogin} from '../../helpers/saveLocalStorage';
+import { removeUserID, removeUserLogin, removeUserObject} from '../../helpers/saveLocalStorage';
 import HeaderUserMenu from './headerUserMenu/HeaderUserMenu';
 
 const Header: React.FC = (): JSX.Element => {
@@ -15,6 +15,8 @@ const Header: React.FC = (): JSX.Element => {
     logout();
     setUser(false);
     removeUserLogin();
+    removeUserObject();
+    removeUserID();
   }
 
   return (

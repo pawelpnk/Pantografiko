@@ -1,4 +1,5 @@
 import req from '../helpers/request';
+import { saveUserID, saveUserObject } from '../helpers/saveLocalStorage';
 
 const loginAuth = async (login: any, password: any) => {
 
@@ -10,6 +11,8 @@ const loginAuth = async (login: any, password: any) => {
     .then((response) => {
       if (response.data.accessToken) {
         localStorage.setItem("token", JSON.stringify(response.data.accessToken));
+        saveUserObject(response.data.findUser);
+        saveUserID(response.data.findUserID);
       }
 
       return response;

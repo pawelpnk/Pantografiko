@@ -8,6 +8,7 @@ import InspectionItemEdit from '../inspectionItemEdit/InspectionItemEdit';
 import NotFoundPage from '../notFoundPage/NotFoundPage';
 import Login from '../loginPage/login';
 import UserChangePassword from '../userPage/userChangePassword/userChangePassword';
+import UserSettings from '../userPage/userSettings/userSettings';
 
 const Content: React.FC = (): JSX.Element => {
   const { user, token } = useContext(StoreContext);
@@ -21,6 +22,7 @@ const Content: React.FC = (): JSX.Element => {
         { isUserLogged && <Route path='/display/:inspectionID' element={<InspectionItem/>} />}
         { isUserLogged && <Route path='/display/edit/:inspectionID' element={<InspectionItemEdit/>}/>}
         { isUserLogged && <Route path='/form' element={<InspectionAddForm/>}/>} 
+        { isUserLogged && <Route path='/user/settings' element={<UserSettings/>}/>}
         { isUserLogged && <Route path='/user/password' element={<UserChangePassword/>}/>}
         <Route path='/*' element={<NotFoundPage />} /> 
       </Routes>

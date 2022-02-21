@@ -7,6 +7,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { AuthService } from 'src/auth/auth.service';
 import { changePassword } from 'src/dto/changePassword';
+import { userResponseLogin } from 'src/dto/userResponseLogin.dto';
 
 @Injectable()
 export class UserService {
@@ -46,6 +47,11 @@ export class UserService {
     return this.filter(findUser);
   }
 
+  // async findOneWithLogin(login: string): Promise<UserResponse> {
+  //   const findUser = await this.userModel.findOne({_id: id}).exec();
+  //   return this.filter(findUser);
+  // }
+
   async findAll(): Promise<UserResponse[]> {
     const findUsers = await this.userModel.find().exec();
     const returnUsersWithoutPassword = findUsers.map((user) => {
@@ -65,13 +71,23 @@ export class UserService {
     return this.filter(deletedUser);
   }
 
-  async login(user: loginUser): Promise<string> {
+  async login(user: loginUser): Promise<userResponseLogin> {
     const validateUser = await this.validateUser(user.login, user.password);
     if(validateUser) {
+      const findUserData = await this.findByLogin(user.login);
+      const findUser = this.filter(findUserData);
+      const findUserID = await this.findID(user.login);
       const generateJWT = await this.authService.generateJWT(user);
-      return generateJWT;
+
+      const responseLogin = {
+        generateJWT,
+        findUser,
+        findUserID
+      }
+
+      return responseLogin;
     } else {
-      return 'Wrong credentials';
+      throw new HttpException('Wrong credentials!', HttpStatus.UNAUTHORIZED);
     }
   }
 

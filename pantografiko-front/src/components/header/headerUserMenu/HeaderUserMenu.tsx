@@ -21,7 +21,7 @@ const HeaderUserMenu: React.FC<Iprops> = ({user}): JSX.Element => {
             <nav className={addClass}>
                 <ul>
                     <li className='li-user'>
-                        <Link to="/">Ustawienia</Link>
+                        <Link to="/user/settings">Ustawienia</Link>
                     </li>
                     <li className='li-user'>
                         <Link to="/user/password">Zmień hasło</Link>
