@@ -35,6 +35,46 @@ const InspectionItemEdit: React.FC = (): JSX.Element => {
       let item: any;
       item = await req.get(`pages/fetch/${inspectionID}`);
       setInspection(item.data.inspection);
+
+      const { 
+        collectorNumber,
+        inspectionDate,
+        collectorType,
+        frontOrRear,
+        overlayThickness1,
+        overlayThickness2,
+        timeOfLiftingTheCurrentCollector,
+        fallTimeOfTheCurrentCollector,
+        correctOperationOfTheCollectorFromTwoCabins,
+        averageStaticPressure,
+        forceDifferenceWhenLiftingAndLowering,
+        holdingForceMeasurement,
+        checkThedegreeOfWearOfTheContactInsertsOfTheSlider,
+        insulationResistanceMeasurement,
+        conditionOfFitness,
+        reasonReplaceSlidePlate,
+        reasonReplaceCurrentCollector,
+        maintenanceActivities
+       } = item.data.inspection[0];
+
+      setCollectorNumber(collectorNumber);
+      setInspectionDate(inspectionDate);
+      setCollectorType(collectorType);
+      setFrontOrRear(frontOrRear);
+      setOverlayThickness1(overlayThickness1);
+      setOverlayThickness2(overlayThickness2);
+      setTimeOfLiftingTheCurrentCollector(timeOfLiftingTheCurrentCollector);
+      setFallTimeOfTheCurrentCollector(fallTimeOfTheCurrentCollector);
+      setCorrectOperationOfTheCollectorFromTwoCabins(correctOperationOfTheCollectorFromTwoCabins);
+      setAverageStaticPressure(averageStaticPressure);
+      setForceDifferenceWhenLiftingAndLowering(forceDifferenceWhenLiftingAndLowering);
+      setHoldingForceMeasurement(holdingForceMeasurement);
+      setCheckThedegreeOfWearOfTheContactInsertsOfTheSlider(checkThedegreeOfWearOfTheContactInsertsOfTheSlider);
+      setInsulationResistanceMeasurement(insulationResistanceMeasurement);
+      setConditionOfFitness(conditionOfFitness);
+      setReasonReplaceSlidePlate(reasonReplaceSlidePlate);
+      setReasonReplaceCurrentCollector(reasonReplaceCurrentCollector);
+      setMaintenanceActivities(maintenanceActivities);
     }
     fetchOneInspection();    
   },[])
