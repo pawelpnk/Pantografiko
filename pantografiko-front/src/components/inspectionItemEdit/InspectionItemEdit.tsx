@@ -23,7 +23,7 @@ const InspectionItemEdit: React.FC = (): JSX.Element => {
   const [conditionOfFitness, setConditionOfFitness] = useState<string>('');
   const [reasonReplaceSlidePlate, setReasonReplaceSlidePlate] = useState<string>('');
   const [reasonReplaceCurrentCollector, setReasonReplaceCurrentCollector] = useState<string>('');
-  const [maintenanceActivities, setMaintenanceActivities] = useState<string>('');
+  const [maintenanceActivities, setMaintenanceActivities] = useState<string>(''); 
 
   const [messageValidation, setMessageValidation] = useState<string>('');
 

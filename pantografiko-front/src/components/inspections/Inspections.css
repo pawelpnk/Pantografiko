@@ -82,3 +82,29 @@
   color: white;
   cursor: pointer;
 }
+
+@Media(max-width: 1100px) {
+  .search-engine {
+    right: 20px;
+    left: auto;
+  }
+}
+
+@Media(max-width: 750px) {
+  .inspections-display-page {
+    margin-top: 30px;
+  }
+
+  .sign-search-engine {
+    position: fixed;
+    color: black;
+    top: 100px;
+    left: 20px;
+    font-weight: bold;
+    font-size: 40px;
+  }
+
+  .search-engine {
+    margin-top: 35px;
+  }
+}

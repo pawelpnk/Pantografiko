@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Inspections.css';
 import req from '../../helpers/request';
 import { Link } from 'react-router-dom';
 // import Chart from '../diagrams/Chart';
 import { Line } from 'react-chartjs-2';
 import { Chart, registerables} from 'chart.js';
+import { useMediaQuery } from 'react-responsive';
 
 const Inspections: React.FC = (): JSX.Element => {
   const [inspections, setInspections] = React.useState<any>([]);
@@ -14,6 +15,7 @@ const Inspections: React.FC = (): JSX.Element => {
   const [frontOrRear, setFrontOrRear] = React.useState<string | number>('');
   const [activeDiagram, setActiveDiagram] = React.useState<boolean>(false);
   const [chartData, setChartData] = React.useState<any>({});
+  const [openSearchEngine, setOpenSearchEngine] = useState<boolean>(false);
 
   useEffect(() => {
     Chart.register(...registerables);
@@ -183,23 +185,34 @@ const Inspections: React.FC = (): JSX.Element => {
 
   const handleOnClickDrawDiagram = (): void => {
     setActiveDiagram(prevValue => !prevValue);
-    // if(filterInsp){
-    //   setFilterInsp('');
-    // }
   }
 
-  const buttonDiagram = (locomotiveNumber && !collectorNumber && filterInsp.length > 0) ? <button onClick={handleOnClickDrawDiagram}>Rysuj wykres</button> : null;
+  const buttonDiagram: JSX.Element | null = (locomotiveNumber && !collectorNumber && filterInsp.length > 0) ? <button onClick={handleOnClickDrawDiagram}>Rysuj wykres</button> : null;
+
+  const searchEngine: JSX.Element = 
+    <div className="search-engine">
+      <p>Wybierz filtry</p>
+      <input onChange={handleOnChangeLocomotiveNumber} type="text" value={locomotiveNumber} placeholder='Wpisz numer lokomotywy'/>
+      <input onChange={handleOnChangeCollectorNumber} value={collectorNumber} type="text" placeholder='Wpisz numer odbieraka'/>
+      <input onChange={handleOnChangeFrontOrRear} type="text" value={frontOrRear} placeholder='Przedni(1)/tylni(2) odbierak' />
+      <button onClick={filterInputsAndSetsDataForDiagram}>Filtruj</button>
+      {buttonDiagram}
+    </div>  
+
+  const isMobile750: boolean = useMediaQuery({query: '(max-width: 750px)'});
+
+  const handleOnClickOpenSearchEngine = () => {
+    setOpenSearchEngine(prev => !prev);
+  }
+
+  const searchEngineOpen: JSX.Element | false = isMobile750 ? openSearchEngine && searchEngine : searchEngine;
+  const signSearchEngine: JSX.Element | null = isMobile750 ? <div onClick={handleOnClickOpenSearchEngine} className="sign-search-engine">X</div> : null;
+
 
   return (
     <>
-      <div className="search-engine">
-        <p>Wybierz filtry</p>
-        <input onChange={handleOnChangeLocomotiveNumber} type="text" value={locomotiveNumber} placeholder='Wpisz numer lokomotywy'/>
-        <input onChange={handleOnChangeCollectorNumber} value={collectorNumber} type="text" placeholder='Wpisz numer odbieraka'/>
-        <input onChange={handleOnChangeFrontOrRear} type="text" value={frontOrRear} placeholder='Przedni(1)/tylni(2) odbierak' />
-        <button onClick={filterInputsAndSetsDataForDiagram}>Filtruj</button>
-        {buttonDiagram}
-      </div>    
+      {signSearchEngine}
+      {searchEngineOpen}    
       <div className='inspections-display-page'>
         {renderInspections}
         {/* {(activeDiagram && filterInsp.length > 0) ? <Chart value={{activeDiagram, setActiveDiagram, locomotiveNumber, chartData}}/> : null} */}

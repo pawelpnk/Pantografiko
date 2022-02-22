@@ -46,3 +46,9 @@
   display: block;
   padding: 2px 10px
 }
+
+@Media(max-width: 750px) {
+  .inspections-display-page-inside {
+    margin-top: 30px;
+  }
+}

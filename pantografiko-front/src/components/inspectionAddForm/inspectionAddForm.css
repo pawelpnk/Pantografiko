@@ -45,3 +45,9 @@
   color: white;
   border: 2px solid white;
 }
+
+@Media(max-width: 750px){
+  .inspection-add-form {
+    margin-top: 20px;
+  }
+}

@@ -20,3 +20,19 @@
 .menu-style p {
   text-align: center;
 }
+
+@Media(max-width: 750px){
+  .menu-style {
+    width: 100%;
+    min-height: 30px;
+    border-bottom: 1px solid white;
+  }
+
+  .menu-style p {
+    border: none;
+  }
+
+  .menu-style nav {
+    border-top: 1px solid white;
+  }
+}
