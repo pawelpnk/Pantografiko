@@ -1,5 +1,7 @@
-import React, { useState, ChangeEvent, useEffect} from 'react';
+import React, { useState, ChangeEvent, useEffect, useContext} from 'react';
 import req from '../../helpers/request';
+import { StoreContext } from '../../store/StoreProvider';
+import Modal from '../modal/modal';
 import './inspectionAddForm.css';
 
 const InspectionAddForm: React.FC = (): JSX.Element => {
@@ -24,6 +26,8 @@ const InspectionAddForm: React.FC = (): JSX.Element => {
   const [maintenanceActivities, setMaintenanceActivities] = useState<string>('');
 
   const [messageValidation, setMessageValidation] = useState<string>('');
+
+  const { openModal, setOpenModal } = useContext(StoreContext);
 
   const handleOnChangeLocomotiveNumber = (event: ChangeEvent<HTMLInputElement>) => setLocomotiveNumber(event.target.value.toUpperCase());
   const handleOnChangeCollectorNumber = (event: ChangeEvent<HTMLInputElement>) => {
@@ -192,8 +196,9 @@ const InspectionAddForm: React.FC = (): JSX.Element => {
       maintenanceActivities
     }).then(response => console.log(response));
     resetInputs();
+
+    setOpenModal(true);
     }
-    
   }
 
   const checkMessageValidation: JSX.Element | null = messageValidation.length > 0 ? <p className='validation-message-form-add'>{messageValidation}</p> : null;
@@ -204,6 +209,7 @@ const InspectionAddForm: React.FC = (): JSX.Element => {
 
   return (
     <div className='inspection-add-form'>
+      <Modal text='Pomyślnie dodano nową inspekcje' openModal={openModal} setOpenModal={setOpenModal}/>
       <form method="post" className="inspection-form" onSubmit={handleOnSubmitInspection}>
         {checkMessageValidation}
         <div className="all-form-block">

@@ -1,7 +1,9 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import req from '../../helpers/request';
+import { StoreContext } from '../../store/StoreProvider';
+import Modal from '../modal/modal';
 import './InspectionItemEdit.css';
 
 const InspectionItemEdit: React.FC = (): JSX.Element => {
@@ -29,6 +31,9 @@ const InspectionItemEdit: React.FC = (): JSX.Element => {
 
   const { inspectionID } = useParams();
   let navigate = useNavigate();
+  // const redirectPage = navigate(`/display/${inspectionID}`);
+
+  const { openModal, setOpenModal } = useContext(StoreContext);
 
   useEffect(() => {
     const fetchOneInspection = async (): Promise<void> => {
@@ -244,12 +249,14 @@ const InspectionItemEdit: React.FC = (): JSX.Element => {
       reasonReplaceCurrentCollector,
       maintenanceActivities
     })
-    // .then(response => console.log(response));
     resetInputs();
     setInspection([]);
-    navigate(`/display/${inspectionID}`);
-    }
-    
+    setOpenModal(true);
+    setTimeout(()=>{
+      setOpenModal(false);
+      navigate(`/display/${inspectionID}`);      
+    },5000);    
+    }    
   }
 
   const handleOnChangeCleanInspection = (): void => {
@@ -261,8 +268,7 @@ const InspectionItemEdit: React.FC = (): JSX.Element => {
 
   useEffect(()=> {
     resetInputs();
-  },[])
-  
+  },[])  
 
   const renderEditInspection: JSX.Element[] | string = inspection.length > 0 ? inspection.map((item: any) => {
     return (
@@ -409,6 +415,7 @@ const InspectionItemEdit: React.FC = (): JSX.Element => {
 
   return (
     <div className='inspections-display-page-edit'>
+      <Modal text='Pomyślnie zaaktualizowano inspekcje' openModal={openModal} setOpenModal={setOpenModal} nonActiveButton={true}/>
       {renderEditInspection}
     </div>
   )

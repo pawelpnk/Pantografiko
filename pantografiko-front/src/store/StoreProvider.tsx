@@ -19,6 +19,7 @@ const StoreProvider: React.FC = ({ children }: any): JSX.Element => {
     role: ''
   });
   const [userID, setUserID] = React.useState<string>('');
+  const [openModal, setOpenModal] = React.useState<boolean>(false);
 
   useEffect(() => {
     setUser(() => fetchUserLogin());
@@ -28,7 +29,7 @@ const StoreProvider: React.FC = ({ children }: any): JSX.Element => {
   },[]);
 
   return (
-    <StoreContext.Provider value={{user, setUser, token, setToken, userObject, setUserObject, userID, setUserID}}>
+    <StoreContext.Provider value={{user, setUser, token, setToken, userObject, setUserObject, userID, setUserID, openModal, setOpenModal}}>
       {children}
     </StoreContext.Provider>
   )

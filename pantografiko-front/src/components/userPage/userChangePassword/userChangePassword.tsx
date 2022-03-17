@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import req from '../../../helpers/request';
 import { StoreContext } from '../../../store/StoreProvider';
+import Modal from '../../modal/modal';
 import './userChangePassword.css';
 
 
 const UserChangePassword: React.FC = (): JSX.Element => {
 
-    const { user } = useContext(StoreContext);
+    const { user, openModal, setOpenModal } = useContext(StoreContext);
 
     const [oldPassword, setOldPassword] = useState<string>('');
     const [newPassword, setNewPassword] = useState<string>('');
@@ -43,7 +44,6 @@ const UserChangePassword: React.FC = (): JSX.Element => {
         const comparePassword: boolean = checkNewPasswordAndRepeatNewPassword();
 
         if(comparePassword){
-        // if(checkNewPasswordAndRepeatNewPassword()){
             try {
                 await req.patch(`/users/password`, {
                     login: user,
@@ -51,6 +51,7 @@ const UserChangePassword: React.FC = (): JSX.Element => {
                     newPassword
                 });
                 resetInputs();
+                setOpenModal(true);
             } catch {
                 setCheckInputs('Wprowadzone aktualne hasło jest niepoprawne');
             }            
@@ -59,10 +60,10 @@ const UserChangePassword: React.FC = (): JSX.Element => {
 
     const validateMessage: JSX.Element | null = checkInputs.length > 0 ? <p className='validate-message-change-password'>{checkInputs}</p> : null;
 
-
     return  (
         <div className="change-password">
             {validateMessage}
+            <Modal text='Pomyślnie zmieniono hasło' openModal={openModal} setOpenModal={setOpenModal}/>
             <form method='patch' onSubmit={submitNewPassword}>
                 <div className="input-pass">
                     <label>
