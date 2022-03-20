@@ -194,7 +194,7 @@ const InspectionAddForm: React.FC = (): JSX.Element => {
       reasonReplaceSlidePlate,
       reasonReplaceCurrentCollector,
       maintenanceActivities
-    }).then(response => console.log(response));
+    });
     resetInputs();
 
     setOpenModal(true);

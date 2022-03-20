@@ -11,3 +11,8 @@
     text-decoration: none;
     color: white;
   }
+
+.admin-menu-nav a {
+  padding: 15px 0;
+  font-weight: bold;
+}

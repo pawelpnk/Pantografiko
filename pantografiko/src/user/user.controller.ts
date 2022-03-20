@@ -1,5 +1,5 @@
 import { loginUser } from './../dto/loginUser.dto';
-import { Body, Controller, Get, HttpStatus, Post, Res, Param, NotFoundException, HttpException, UseGuards, HttpCode, Patch } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Post, Res, Param, NotFoundException, UseGuards, Patch } from '@nestjs/common';
 import { CreateUserDTO } from 'src/dto/create-user.dto';
 import { UserService } from './user.service';
 import { Response } from 'express';
@@ -62,15 +62,6 @@ export class UserController {
     const user = await this.userService.findOne(id);
     return user;
   }
-
-  // @UseGuards(JwtAuthGuard)
-  // @Get('/users/loginUser')
-  // async fetchOneUser(
-  //   @Body() login: string
-  // ) {
-  //   const user = await this.userService.findOneWithLogin(login);
-  //   return user;
-  // }
 
   @UseGuards(JwtAuthGuard)
   @Patch('/users/password')

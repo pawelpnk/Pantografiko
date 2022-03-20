@@ -10,7 +10,6 @@ const UserSettings: React.FC = ():JSX.Element => {
             <p>Login: {userObject.login}</p>
             <p>Email: {userObject.email}</p>
             <p>Rola: {userObject.role}</p>
-            <p>Przedsiębiorstwo: {'Brak...'}</p>
         </div>
     )
 }

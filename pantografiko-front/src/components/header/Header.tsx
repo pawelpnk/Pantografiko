@@ -21,7 +21,7 @@ const Header: React.FC = (): JSX.Element => {
   }
 
   const isMobile = useMediaQuery({query: '(min-width: 600px)'});
-  const textHeader = isMobile ? 'Pantografiko - Twoja aplikacka do zbierania danych!' : "Pantografiko";
+  const textHeader = isMobile ? 'Pantografiko - Twoja aplikacja do zbierania danych!' : "Pantografiko";
 
   return (
     <header className='header'>

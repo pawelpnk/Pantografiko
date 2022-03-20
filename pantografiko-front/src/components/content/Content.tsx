@@ -9,11 +9,13 @@ import NotFoundPage from '../notFoundPage/NotFoundPage';
 import Login from '../loginPage/login';
 import UserChangePassword from '../userPage/userChangePassword/userChangePassword';
 import UserSettings from '../userPage/userSettings/userSettings';
+import AdminPage from '../adminPage/AdminPage';
 
 const Content: React.FC = (): JSX.Element => {
-  const { user, token } = useContext(StoreContext);
+  const { user, token, userObject } = useContext(StoreContext);
 
   const isUserLogged: boolean = Boolean(user) && Boolean(token);
+  const isUserAdminLogged: boolean = Boolean(user) && Boolean(token) && Boolean(userObject.role === 'user');
 
   return (
       <Routes>
@@ -24,6 +26,7 @@ const Content: React.FC = (): JSX.Element => {
         { isUserLogged && <Route path='/form' element={<InspectionAddForm/>}/>} 
         { isUserLogged && <Route path='/user/settings' element={<UserSettings/>}/>}
         { isUserLogged && <Route path='/user/password' element={<UserChangePassword/>}/>}
+        { isUserAdminLogged && <Route path='/admin/*' element={<AdminPage/>} />}
         <Route path='/*' element={<NotFoundPage />} /> 
       </Routes>
   )

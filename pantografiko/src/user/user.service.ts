@@ -47,11 +47,6 @@ export class UserService {
     return this.filter(findUser);
   }
 
-  // async findOneWithLogin(login: string): Promise<UserResponse> {
-  //   const findUser = await this.userModel.findOne({_id: id}).exec();
-  //   return this.filter(findUser);
-  // }
-
   async findAll(): Promise<UserResponse[]> {
     const findUsers = await this.userModel.find().exec();
     const returnUsersWithoutPassword = findUsers.map((user) => {

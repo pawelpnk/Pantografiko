@@ -1,0 +1,25 @@
+.admin-page-content {
+    background-color: darkgray;
+    font-weight: bold;
+    margin:  auto;
+    width: 650px;
+}
+
+.sub-menu-admin {
+    display: flex;
+    border: 2px solid black;
+}
+
+.sub-menu-admin a {
+    flex-grow: 1;
+    text-align: center;
+    cursor: pointer;
+    padding: 20px 5px;
+    text-decoration: none;
+    color: black;
+}
+
+.sub-menu-admin a:hover {
+    background-color: black;
+    color: white;
+}

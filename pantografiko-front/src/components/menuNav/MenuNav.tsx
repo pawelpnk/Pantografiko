@@ -1,7 +1,18 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { StoreContext } from '../../store/StoreProvider';
 import './menuNav.css';
 
 const MenuNav: React.FC = (): JSX.Element => {
+
+  const { userObject } = useContext(StoreContext);
+
+  const isAdmin = userObject.role === 'user' ? 
+    <li className='admin-menu-nav menu-style-links'>
+      <Link to="/admin">Panel Administratora</Link>
+    </li>
+     : null;
+
   return (
     <>
       <nav>
@@ -11,7 +22,8 @@ const MenuNav: React.FC = (): JSX.Element => {
             </li>
             <li className='menu-style-links'>
                 <Link to="/display">Wyświetl inspekcje</Link>
-            </li>          
+            </li>
+            {isAdmin}          
         </ul>
       </nav>
     </>
