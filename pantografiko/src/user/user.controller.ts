@@ -1,5 +1,5 @@
 import { loginUser } from './../dto/loginUser.dto';
-import { Body, Controller, Get, HttpStatus, Post, Res, Param, NotFoundException, UseGuards, Patch } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Post, Res, Param, NotFoundException, UseGuards, Patch, Delete } from '@nestjs/common';
 import { CreateUserDTO } from 'src/dto/create-user.dto';
 import { UserService } from './user.service';
 import { Response } from 'express';
@@ -72,5 +72,14 @@ export class UserController {
     if(newPassword){
       return 'Password changed';
     }    
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('/users/:login')
+  async deleteUser(
+    @Param('login') login: string
+  ) {
+    const deletedUser = await this.userService.deleteUser(login);
+    return deletedUser;
   }
 }

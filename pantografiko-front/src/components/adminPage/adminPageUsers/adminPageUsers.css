@@ -1,0 +1,56 @@
+.admin-page-users {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    /* padding: 0 10px; */
+}
+
+.admin-page-users-titles {
+    display: flex;
+    border-bottom: 1px solid black;
+    margin-bottom: 10px;
+    padding: 0 10px 2px 10px;
+}
+
+.admin-page-users-titles > * {
+    flex: 1;
+}
+
+.admin-page-users-titles p:nth-child(2) {
+    flex: 30%;
+}
+
+.admin-page-users-titles p:nth-child(3) {
+    flex: 2%;
+}
+
+.all-users-style {
+    display: flex;
+    margin-bottom: 5px;
+    padding: 0 10px;
+}
+
+.all-users-style button {
+    background-color: white;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.all-users-style button:nth-child(5) {
+    margin-left: 3px;
+    border: 1px solid red;
+    color: red;
+}
+
+.all-users-style button:nth-child(5):hover {
+    background-color: red;
+    color: white;
+}
+
+.all-users-style > * {
+    flex: 1;
+}
+
+.all-users-style p:nth-child(2) {
+    flex: 30%;
+} 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './modal.css';
 
 type IProps = {
@@ -6,11 +6,20 @@ type IProps = {
     openModal: boolean;
     setOpenModal: (isModalOpen: boolean) => void;
     nonActiveButton?: boolean;
+    buttonCancel?: boolean;
+    deleteFunction?: () => Promise<void>;
 }
 
-const Modal: React.FC<IProps> = ({text, openModal, setOpenModal, nonActiveButton}): JSX.Element => {
+const Modal: React.FC<IProps> = ({text, openModal, setOpenModal, nonActiveButton, buttonCancel, deleteFunction}): JSX.Element => {
 
-    const handleOnClick = (): void => {
+    const handleOnClickConfirm = (): void => {
+        setOpenModal(false);
+        if(deleteFunction){
+            deleteFunction();
+        }
+    }
+
+    const handleOnClickCancel = (): void => {
         setOpenModal(false);
     }
 
@@ -18,7 +27,11 @@ const Modal: React.FC<IProps> = ({text, openModal, setOpenModal, nonActiveButton
         <div className='body-container'>
             <div className='modal'>
                 <p>{text}</p>
-                { nonActiveButton ? null : <button onClick={handleOnClick}>Zatwierdź</button>}
+                <div className="btn-all-modal">
+                    { nonActiveButton ? null : <button onClick={handleOnClickConfirm}>Zatwierdź</button>}
+                    { buttonCancel ? <button onClick={handleOnClickCancel}>Anuluj</button> : null}
+                </div>  
+                
             </div>
         </div>
         : null;

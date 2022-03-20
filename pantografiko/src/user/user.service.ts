@@ -61,8 +61,8 @@ export class UserService {
     return this.filter(updateUser);
   }
 
-  async deleteUser(id: any): Promise<UserResponse> {
-    const deletedUser = await this.userModel.findByIdAndDelete({_id: id});
+  async deleteUser(login: string): Promise<UserResponse> {
+    const deletedUser = await this.userModel.findOneAndDelete({login});
     return this.filter(deletedUser);
   }
 

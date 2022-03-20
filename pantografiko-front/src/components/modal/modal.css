@@ -22,7 +22,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* flex-wrap: wrap; */
 }
 
 .modal p {
@@ -39,4 +38,8 @@
 .modal button:hover {
     background-color: black;
     color: white;
+}
+
+.btn-all-modal button:first-child{
+    margin-right: 20px;
 }

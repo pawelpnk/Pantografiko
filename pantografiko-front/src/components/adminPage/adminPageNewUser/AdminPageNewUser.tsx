@@ -66,7 +66,7 @@ const AdminPageNewUser: React.FC = (): JSX.Element => {
     
                 setOpenModal(true);
             } catch {
-                setMessageValidate("Login lub hasło są już wykorzystane");
+                setMessageValidate("Login lub e-mail jest już wykorzystane");
             }
         }
     }
