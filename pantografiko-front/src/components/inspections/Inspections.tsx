@@ -2,19 +2,18 @@ import React, { useEffect, useState } from 'react';
 import './Inspections.css';
 import req from '../../helpers/request';
 import { Link } from 'react-router-dom';
-// import Chart from '../diagrams/Chart';
 import { Line } from 'react-chartjs-2';
 import { Chart, registerables} from 'chart.js';
 import { useMediaQuery } from 'react-responsive';
 
 const Inspections: React.FC = (): JSX.Element => {
-  const [inspections, setInspections] = React.useState<any>([]);
-  const [filterInsp, setFilterInsp] = React.useState<any>([]);
-  const [locomotiveNumber, setLocomotiveNumber] = React.useState<string | number>('');
-  const [collectorNumber, setCollectorNumber] = React.useState<string | number>('');
-  const [frontOrRear, setFrontOrRear] = React.useState<string | number>('');
-  const [activeDiagram, setActiveDiagram] = React.useState<boolean>(false);
-  const [chartData, setChartData] = React.useState<any>({});
+  const [inspections, setInspections] = useState<any>([]);
+  const [filterInsp, setFilterInsp] = useState<any>([]);
+  const [locomotiveNumber, setLocomotiveNumber] = useState<string | number>('');
+  const [collectorNumber, setCollectorNumber] = useState<string | number>('');
+  const [frontOrRear, setFrontOrRear] = useState<string | number>('');
+  const [activeDiagram, setActiveDiagram] = useState<boolean>(false);
+  const [chartData, setChartData] = useState<any>({});
   const [openSearchEngine, setOpenSearchEngine] = useState<boolean>(false);
 
   useEffect(() => {
@@ -22,10 +21,8 @@ const Inspections: React.FC = (): JSX.Element => {
     fetchInspections();
   },[]);
 
-  const fetchInspections = async () => {
-    let data: any;
-    
-    data = await req.get("pages/fetch");
+  const fetchInspections = async () => {    
+    let data = await req.get("pages/fetch");
     setInspections(data.data);
   }
 
@@ -38,7 +35,6 @@ const Inspections: React.FC = (): JSX.Element => {
     await req.delete(`pages/delete/${inspection._id}`);
     fetchInspections();
     filterInputsAndSetsDataForDiagram();
-    console.log('ok');
   }
 
   const renderInspections = filterInsp.length > 0 ? filterInsp.map((inspection: any) =>{
@@ -150,15 +146,7 @@ const Inspections: React.FC = (): JSX.Element => {
         {
           type: 'line',
           label: 'Grubość nakładki 1',
-          // data: filterInsp.map((insp: any) => {
-          //   return {
-          //     x: insp.inspectionOfNumber,
-          //     y: insp.overlayThickness1
-          //   }
-          // }),
-          // data: [{x: 1, y: 3}, {x: 3, y: 4}, {x: 4, y: 6}, {x: 6, y: 9}],
           data: filterInsp.map((insp: any) => insp.overlayThickness1),
-          // fill: true,
           backgroundColor: 'rgba(23, 56, 12, 5)',
           fontColor: 'red',
           fill: false,
@@ -167,15 +155,7 @@ const Inspections: React.FC = (): JSX.Element => {
         {
           type: 'line',
           label: 'Grubość nakładki 2',
-          // data: filterInsp.map((insp: any) => {
-          //   return {
-          //     x: insp.inspectionOfNumber,
-          //     y: insp.overlayThickness2
-          //   }
-          // }),
-          // data: [{x: 1, y: 2}, {x: 2, y: 4}, {x: 3, y: 8},{x: 4, y: 16}],
           data: filterInsp.map((insp: any) => insp.overlayThickness2),
-          // fill: true,
           backGroundColor: 'rgba(185, 124, 191, 26)',
           borderColor: 'rgba(200, 0, 0, 1)'
         }
@@ -215,68 +195,52 @@ const Inspections: React.FC = (): JSX.Element => {
       {searchEngineOpen}    
       <div className='inspections-display-page'>
         {renderInspections}
-        {/* {(activeDiagram && filterInsp.length > 0) ? <Chart value={{activeDiagram, setActiveDiagram, locomotiveNumber, chartData}}/> : null} */}
-        {(activeDiagram && filterInsp.length > 0) ?  <div className="diagram-style">
-        <Line
-          data={chartData} 
-          options={{
-            // backgroundColor: 'red',
-            showLine: false,
-            // chart: {
-            //   type: 'scatter'
-            // },
-            scales: {
-              // backgroundColor: 'red',
-              x: {
-                ticks: {
-                  color: 'white'
-                },
-                
-                grid: {
-                  // color: 'gray',
-                  // borderColor: 'gray',
-                  // fontColor: 'red'
-                  // tickColor: 'red'
-                }
-              },
-              // y: {
-              //   ticks: {
-              //     color: 'black'
-              //   }
-              // },
-              yAxes: 
-                {             
-                  beginAtZero: false,
-                  
-                  ticks: {
+        {(activeDiagram && filterInsp.length > 0) 
+          ?  
+            <div className="diagram-style">
+              <Line
+                data={chartData} 
+                options={{
+                  showLine: false,
+                  scales: {
+                    x: {
+                      ticks: {
+                        color: 'white'
+                      },
+                    },
+                    yAxes: 
+                      {             
+                        beginAtZero: false,                  
+                        ticks: {
+                          color: 'white'
+                        },
+                        grid: {
+                          color: 'gray'
+                        }              
+                      },                           
+                  },
+                  plugins: {
+                  title: {
+                    display: true,
+                    text: `Nazwa lokomotywy: ${locomotiveNumber}`,
                     color: 'white'
                   },
-                  grid: {
-                    color: 'gray'
-                  }              
-                },
-                           
-            },
-            plugins: {
-            title: {
-              display: true,
-              text: `Nazwa lokomotywy: ${locomotiveNumber}`,
-              color: 'white'
-            },
-            legend: {
-              display: true,
-              position: 'right',
-              labels: {
-                color: 'white'
-              }
-            },
-            tooltip: {
-              bodyColor: 'white'
-            }
-          }}}
-        />
-        <button onClick={handleOnClickDrawDiagram}>Zamknij</button>
-        </div> : null}
+                  legend: {
+                    display: true,
+                    position: 'right',
+                    labels: {
+                      color: 'white'
+                    }
+                  },
+                  tooltip: {
+                    bodyColor: 'white'
+                  }
+                }}}
+              />
+              <button onClick={handleOnClickDrawDiagram}>Zamknij</button>
+            </div> 
+          : 
+          null}
         
         </div>
     </>

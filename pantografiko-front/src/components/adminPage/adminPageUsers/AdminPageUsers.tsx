@@ -14,12 +14,13 @@ const AdminPageUsers: React.FC = ():JSX.Element => {
     const [users, setUsers] = useState<UsersFetch[]>([]);
     const [deleteUser, setDeleteUser] = useState<string>('');
 
+    const text = `Potwierdź usunięcie konta ${deleteUser}`
+
     const { openModal, setOpenModal } = useContext(StoreContext);
 
     useEffect(()=>{
         const getUsers = async (): Promise<void> => {
             const data: any = await req.get("/users");
-            console.log(data.data);
             setUsers(data.data);
         }
         getUsers();
@@ -35,12 +36,12 @@ const AdminPageUsers: React.FC = ():JSX.Element => {
 
     const handleOnDeleteUser = (login: string): void => {
         setDeleteUser(login);
-        setOpenModal(true);
+        setOpenModal(2);
     }
 
     return (
         <div className="admin-page-users">
-            <Modal text={`Potwierdź usunięcie konta ${deleteUser}`} openModal={openModal} setOpenModal={setOpenModal} buttonCancel={true} deleteFunction={deleteUserAfterConfirm}/>
+            <Modal text={text} openModal={openModal} setOpenModal={setOpenModal} deleteFunction={deleteUserAfterConfirm}/>
             <div className="admin-page-users-titles">
                 <p>Login</p>
                 <p>E-mail</p>

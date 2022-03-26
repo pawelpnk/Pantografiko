@@ -21,7 +21,7 @@
   text-align: center;
 }
 
-@Media(max-width: 750px){
+@Media(max-width: 800px){
   .menu-style {
     width: 100%;
     min-height: 30px;

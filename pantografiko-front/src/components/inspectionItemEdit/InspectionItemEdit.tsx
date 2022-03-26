@@ -6,6 +6,8 @@ import { StoreContext } from '../../store/StoreProvider';
 import Modal from '../modal/modal';
 import './InspectionItemEdit.css';
 
+const text = 'Pomyślnie zaaktualizowano inspekcje';
+
 const InspectionItemEdit: React.FC = (): JSX.Element => {
   const [inspection, setInspection] = useState<object[]>([]);
   const [collectorNumber, setCollectorNumber] = useState<string | number>('');
@@ -31,7 +33,6 @@ const InspectionItemEdit: React.FC = (): JSX.Element => {
 
   const { inspectionID } = useParams();
   let navigate = useNavigate();
-  // const redirectPage = navigate(`/display/${inspectionID}`);
 
   const { openModal, setOpenModal } = useContext(StoreContext);
 
@@ -251,11 +252,11 @@ const InspectionItemEdit: React.FC = (): JSX.Element => {
     })
     resetInputs();
     setInspection([]);
-    setOpenModal(true);
+    setOpenModal(1);
     setTimeout(()=>{
-      setOpenModal(false);
+      setOpenModal(0);
       navigate(`/display/${inspectionID}`);      
-    },5000);    
+    }, 3000);    
     }    
   }
 
@@ -415,7 +416,7 @@ const InspectionItemEdit: React.FC = (): JSX.Element => {
 
   return (
     <div className='inspections-display-page-edit'>
-      <Modal text='Pomyślnie zaaktualizowano inspekcje' openModal={openModal} setOpenModal={setOpenModal} nonActiveButton={true}/>
+      <Modal text={text} openModal={openModal} setOpenModal={setOpenModal} />
       {renderEditInspection}
     </div>
   )

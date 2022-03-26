@@ -16,6 +16,7 @@ const AdminPage: React.FC = (): JSX.Element => {
             <Routes>
                 <Route path='/users' element={<AdminPageUsers/>} />
                 <Route path='/new' element={<AdminPageNewUser/>} />
+                {/* <Route path='/users/:login' element={<AdminPageUserEdit/>} /> */}
             </Routes>
         </div>
     )

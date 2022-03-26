@@ -4,6 +4,8 @@ import { StoreContext } from '../../store/StoreProvider';
 import Modal from '../modal/modal';
 import './inspectionAddForm.css';
 
+const text = 'Pomyślnie dodano nową inspekcje';
+
 const InspectionAddForm: React.FC = (): JSX.Element => {
   const [locomotiveNumber, setLocomotiveNumber] = useState<string>('');
   const [collectorNumber, setCollectorNumber] = useState<number | string>(0);
@@ -197,7 +199,7 @@ const InspectionAddForm: React.FC = (): JSX.Element => {
     });
     resetInputs();
 
-    setOpenModal(true);
+    setOpenModal(3);
     }
   }
 
@@ -209,7 +211,7 @@ const InspectionAddForm: React.FC = (): JSX.Element => {
 
   return (
     <div className='inspection-add-form'>
-      <Modal text='Pomyślnie dodano nową inspekcje' openModal={openModal} setOpenModal={setOpenModal}/>
+      <Modal text={text} openModal={openModal} setOpenModal={setOpenModal}/>
       <form method="post" className="inspection-form" onSubmit={handleOnSubmitInspection}>
         {checkMessageValidation}
         <div className="all-form-block">

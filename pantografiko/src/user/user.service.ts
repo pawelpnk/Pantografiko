@@ -1,7 +1,7 @@
 import { loginUser } from './../dto/loginUser.dto';
 import { CreateUserDTO } from 'src/dto/create-user.dto';
 import { UserResponse } from './../dto/userResponse.dto';
-import { IUser, UserRole } from './../interfaces/user.interface';
+import { IUser } from './../interfaces/user.interface';
 import { HttpException, Injectable, HttpStatus, forwardRef, Inject } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -35,7 +35,7 @@ export class UserService {
       newUser.login = user.login;
       newUser.password = hashPasswordNewUser;
       newUser.email = user.email;
-      newUser.role = UserRole.USER;
+      newUser.role = user.role;
 
       const newUserSave = await new this.userModel(newUser).save();
 

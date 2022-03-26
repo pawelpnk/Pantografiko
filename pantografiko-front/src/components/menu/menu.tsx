@@ -16,7 +16,7 @@ const Menu: React.FC = (): JSX.Element => {
     setDisplayMenu(prev => !prev);
   }
 
-  const isMobile: boolean = useMediaQuery({query: '(max-width: 750px)'});
+  const isMobile: boolean = useMediaQuery({query: '(max-width: 800px)'});
   const displayTextMenuDesktopOrMobile: JSX.Element = isMobile ? <p onClick={handleOnClickMobile}>Menu</p> : <p>Menu</p>;  
   const displayMenuNav: JSX.Element | false = isMobile ? displayMenu && <MenuNav/> : <MenuNav/>;
 
