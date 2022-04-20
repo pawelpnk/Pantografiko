@@ -13,9 +13,18 @@ Aplikacja została stworzona na potrzeby pracy inżynierskiej. Podstawowym zało
 - Edycje oraz usuwanie wybranych przeglądów
 
 ## Instalacja
-Lokalna instalacja możliwa jest poprzez pobranie aplikacji, a następnie wpisanie komendy:
+Lokalna instalacja możliwa jest poprzez pobranie aplikacji, stworzenie pliku .env z konfiguracją bazy danych a następnie wpisanie komendy:
 
 `npm start`
+
+Przykładowa konfiguracja pliku `.env`
+
+`
+DATABASE_USER=Twoja nazwa użytkownika z dostępem do bazy danych
+DATABASE_PASSWORD=Twoje hasło dostępowe do bazy danych
+DATABASE_HOST=Host Twojej bazy danych
+DATABASE_NAME=Pantografiko
+`
 
 Serwer należy uruchomić zarówno w folderze z backendem jak i frontendem.
 
