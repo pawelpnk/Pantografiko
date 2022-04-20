@@ -24,7 +24,9 @@ DATABASE_USER=Twoja nazwa użytkownika z dostępem do bazy danych
 DATABASE_PASSWORD=Twoje hasło dostępowe do bazy danych
 DATABASE_HOST=Host Twojej bazy danych
 DATABASE_NAME=Pantografiko
+EXPIRESIN=Czas wygasania tokenu
 `
+Ostatnia linijka jest stworzona na potrzeby przyszłych rozwiązań.
 
 Serwer należy uruchomić zarówno w folderze z backendem jak i frontendem.
 
