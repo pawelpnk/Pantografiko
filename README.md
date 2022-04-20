@@ -26,6 +26,7 @@ Serwer należy uruchomić zarówno w folderze z backendem jak i frontendem.
 - MongoDB
 - Mongoose
 - Char.js
+- React-responsive
 - CSS
 - HTML
 
