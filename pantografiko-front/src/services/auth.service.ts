@@ -1,7 +1,7 @@
 import req from '../helpers/request';
 import { saveUserID, saveUserObject } from '../helpers/saveLocalStorage';
 
-const loginAuth = async (login: any, password: any) => {
+const loginAuth = async (login: string, password: string) => {
 
   return req
     .post("/login", {
@@ -23,7 +23,7 @@ const logout = (): void => {
   localStorage.removeItem("token");
 };
 
-const getCurrentUser = (): any => {
+const getCurrentUser = () => {
   const userNow = JSON.parse(localStorage.getItem("token") || '{}');
   return userNow;
 };

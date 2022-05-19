@@ -2,16 +2,17 @@ import { CreatePagesDTO } from './../dto/create-pages.dto';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Pages } from 'src/interfaces/pages.interface';
+import { Pages } from '../interfaces/pages.interface';
+import { IUser } from '../interfaces/user.interface';
 
 @Injectable()
 export class PagesService {
   constructor(@InjectModel('pages') private pagesModel: Model<Pages>) {}
 
-  async addInspection(createInspectionDTO: CreatePagesDTO, user): Promise<Pages> {
+  async addInspection(createInspectionDTO: CreatePagesDTO, user: IUser): Promise<Pages> {
     const findInspection = await this.pagesModel.find({locomotiveNumber: createInspectionDTO.locomotiveNumber}).sort({inspectionOfNumber: -1}).limit(1);
 
-    const checkInspection = findInspection.length > 0 ? (!findInspection[0].inspectionOfNumber ? 1 : ++findInspection[0].inspectionOfNumber) : 1;
+    const checkInspection: number = findInspection.length > 0 ? (!findInspection[0].inspectionOfNumber ? 1 : ++findInspection[0].inspectionOfNumber) : 1;
 
     const newInspection = new this.pagesModel(createInspectionDTO);
     newInspection.loginUserID = user.login;

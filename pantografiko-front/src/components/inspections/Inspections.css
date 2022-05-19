@@ -108,3 +108,19 @@
     margin-top: 35px;
   }
 }
+
+@Media(max-width: 1120px) {
+  .diagram-style {
+    width: 500px
+  }
+
+  .diagram-style button {
+    font-size: 15px
+  }
+}
+
+@Media(max-width: 530px) {
+  .diagram-style {
+    width: 370px
+  }
+}

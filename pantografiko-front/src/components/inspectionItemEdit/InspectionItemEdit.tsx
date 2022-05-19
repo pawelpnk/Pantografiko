@@ -1,15 +1,15 @@
-import React, { ChangeEvent, useContext, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import req from '../../helpers/request';
-import { StoreContext } from '../../store/StoreProvider';
+import { InspectionInterface } from '../inspections/inspection.interface/inspection-interface';
 import Modal from '../modal/modal';
 import './InspectionItemEdit.css';
 
 const text = 'Pomyślnie zaaktualizowano inspekcje';
 
 const InspectionItemEdit: React.FC = (): JSX.Element => {
-  const [inspection, setInspection] = useState<object[]>([]);
+  const [inspection, setInspection] = useState<InspectionInterface[]>([]);
   const [collectorNumber, setCollectorNumber] = useState<string | number>('');
   const [inspectionDate, setInspectionDate] = useState<string>('');
   const [collectorType, setCollectorType] = useState<number | string>('');
@@ -30,16 +30,14 @@ const InspectionItemEdit: React.FC = (): JSX.Element => {
   const [maintenanceActivities, setMaintenanceActivities] = useState<string>(''); 
 
   const [messageValidation, setMessageValidation] = useState<string>('');
+  const [openModal, setOpenModal] = useState<number>(0);
 
   const { inspectionID } = useParams();
   let navigate = useNavigate();
 
-  const { openModal, setOpenModal } = useContext(StoreContext);
-
   useEffect(() => {
     const fetchOneInspection = async (): Promise<void> => {
-      let item: any;
-      item = await req.get(`pages/fetch/${inspectionID}`);
+      let item = await req.get(`pages/fetch/${inspectionID}`);
       setInspection(item.data.inspection);
 
       const { 
@@ -229,7 +227,6 @@ const InspectionItemEdit: React.FC = (): JSX.Element => {
     if(validateInputs()) {
 
     let result;
-    console.log(result);
     result = await req.patch(`/pages/update/${inspectionID}`, {
       collectorNumber,
       inspectionDate,
@@ -271,7 +268,7 @@ const InspectionItemEdit: React.FC = (): JSX.Element => {
     resetInputs();
   },[])  
 
-  const renderEditInspection: JSX.Element[] | string = inspection.length > 0 ? inspection.map((item: any) => {
+  const renderEditInspection: JSX.Element[] | string = inspection.length > 0 ? inspection.map((item: InspectionInterface | any) => {
     return (
     <form className="inspection-block-edit" key={item._id} onSubmit={handleOnSubmitInspection}>
       {checkMessageValidation}

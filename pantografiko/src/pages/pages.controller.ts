@@ -1,9 +1,10 @@
-import { JwtAuthGuard } from 'src/auth/jwt.guard';
+import { JwtAuthGuard } from '../auth/jwt.guard';
 import { PagesService } from './pages.service';
 import { Body, Controller, HttpStatus, Post, Res, Get, Delete, Param, Patch, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
-import { CreatePagesDTO } from 'src/dto/create-pages.dto';
-import { UserObj } from 'src/decorators/user.decorator';
+import { CreatePagesDTO } from '../dto/create-pages.dto';
+import { UserObj } from '../decorators/user.decorator';
+import { IUser } from '../interfaces/user.interface';
 
 @Controller('pages')
 export class PagesController {
@@ -14,11 +15,11 @@ export class PagesController {
   async addInspection(
     @Res() res: Response,
     @Body() createInspectionDTO: CreatePagesDTO,
-    @UserObj() user
-  ): Promise<Object> {
+    @UserObj() user: IUser
+  ) {
     const newInspection = await this.pagesService.addInspection(createInspectionDTO, user);
     return res.status(HttpStatus.OK).json({
-      message: 'New inspection has been succesfully added',
+      message: 'Dodano nową inspekcje',
       inspection: newInspection
     })
   }
@@ -27,7 +28,7 @@ export class PagesController {
   @Get('/fetch')
   async fetchAllInspections(
     @Res() res: Response
-  ): Promise<Object> {
+  ) {
     const fetchInspections = await this.pagesService.getInspections();
     return res.status(HttpStatus.OK).json(fetchInspections)
   }
@@ -37,10 +38,10 @@ export class PagesController {
   async fetchOneInspection(
     @Res() res: Response,
     @Param('id') ID: string
-  ): Promise<Object> {
+  ) {
     const searchOneInspection = await this.pagesService.findInspection(ID);
     return res.status(HttpStatus.OK).json({
-      message: 'Inspection download',
+      message: 'Inspekcja pobrana',
       inspection: searchOneInspection
     })
   }
@@ -50,10 +51,10 @@ export class PagesController {
   async deleteInspection(
     @Res() res: Response,
     @Param('id') ID: string
-  ): Promise<Object> {
+  ) {
     const deletedInspection = await this.pagesService.deleteInspection(ID);
     return res.status(HttpStatus.OK).json({
-      message: 'Inspection deleted',
+      message: 'Inspekcja usunięta',
       inspection: deletedInspection
     });
   }
@@ -64,10 +65,10 @@ export class PagesController {
     @Res() res: Response,
     @Param('id') ID: string,
     @Body() inspectionDTO: CreatePagesDTO
-  ): Promise<Object> {
+  ) {
     const updateInspection = await this.pagesService.updateInspection(ID, inspectionDTO);
     return res.status(HttpStatus.OK).json({
-      message: 'Inspection has been succesfully updated',
+      message: 'Inspekcja zaaktualizowana',
       inspection: updateInspection
     })
   }

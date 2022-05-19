@@ -29,16 +29,18 @@ const LoginForm: React.FC = (): JSX.Element => {
     event.preventDefault();
     
   try {
-    const data: any = await loginAuth(login, password);
+    const data = await loginAuth(login, password);
       if(data.data.accessToken) {
         setUser(login);
         setToken(data.data.accessToken);
         saveUserLogin(login);
         setUserID(data.data.findUserID);
         setUserObject(data.data.findUser);
+      } else {
+        setValidateMessage(data.data.message)
       }
     } catch {
-      setValidateMessage('Bad login or password');
+      console.log('Błąd uwierzytelniania')
     }
   }
 

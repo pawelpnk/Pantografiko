@@ -7,7 +7,7 @@ const MenuNav: React.FC = (): JSX.Element => {
 
   const { userObject } = useContext(StoreContext);
 
-  const isAdmin = userObject.role === 'user' ? 
+  const isAdmin = userObject?.role === 'user' ? 
     <li className='admin-menu-nav menu-style-links'>
       <Link to="/admin">Panel Administratora</Link>
     </li>

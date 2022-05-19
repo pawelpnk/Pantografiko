@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import req from "../../../helpers/request";
-import { StoreContext } from "../../../store/StoreProvider";
 import Modal from "../../modal/modal";
 import './adminPageUsers.css';
 
@@ -13,14 +12,13 @@ interface UsersFetch {
 const AdminPageUsers: React.FC = ():JSX.Element => {
     const [users, setUsers] = useState<UsersFetch[]>([]);
     const [deleteUser, setDeleteUser] = useState<string>('');
+    const [openModal, setOpenModal] = useState<number>(0);
 
     const text = `Potwierdź usunięcie konta ${deleteUser}`
 
-    const { openModal, setOpenModal } = useContext(StoreContext);
-
     useEffect(()=>{
         const getUsers = async (): Promise<void> => {
-            const data: any = await req.get("/users");
+            const data = await req.get("/users");
             setUsers(data.data);
         }
         getUsers();

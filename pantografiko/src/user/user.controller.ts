@@ -1,11 +1,12 @@
 import { loginUser } from './../dto/loginUser.dto';
-import { Body, Controller, Get, HttpStatus, Post, Res, Param, NotFoundException, UseGuards, Patch, Delete } from '@nestjs/common';
-import { CreateUserDTO } from 'src/dto/create-user.dto';
+import { Body, Controller, Get, HttpStatus, Post, Res, Param, UseGuards, Patch, Delete } from '@nestjs/common';
+import { CreateUserDTO } from '../dto/create-user.dto';
 import { UserService } from './user.service';
 import { Response } from 'express';
-import { JwtAuthGuard } from 'src/auth/jwt.guard';
-import { changePassword } from 'src/dto/changePassword';
-import { userResponseLogin } from 'src/dto/userResponseLogin.dto';
+import { JwtAuthGuard } from '../auth/jwt.guard';
+import { changePassword } from '../dto/changePassword';
+import { userResponseLogin } from '../dto/userResponseLogin.dto';
+import { UserResponse } from '../dto/userResponse.dto';
 
 @Controller('/')
 export class UserController {
@@ -18,13 +19,15 @@ export class UserController {
     @Body() newUser: CreateUserDTO
   ) {
     try {
-      const user = await this.userService.createUser(newUser);
+      const user: UserResponse = await this.userService.createUser(newUser);
       return res.status(HttpStatus.OK).json({
-        message: 'Added new user',
+        message: 'Dodano nowego użytkownika',
         user
       })
-    } catch {
-      throw new NotFoundException('Failed to add a user');
+    } catch (err) {
+      return res.json({
+        message: err.message 
+      });
     }
   }
 
@@ -40,16 +43,16 @@ export class UserController {
         findUser: userReturn.findUser,
         findUserID: userReturn.findUserID
       })
-    } catch {
+    } catch (err) {
       return res.status(400).json({
-        message: 'Failed credentials'
+        message: err.message
       })
     }
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('/users')
-  async getAllUsers() {
+  async getAllUsers(): Promise<UserResponse[]> {
     const users = await this.userService.findAll();
     return users;
   }
@@ -58,20 +61,25 @@ export class UserController {
   @Get('/users/:user')
   async getOneUser(
     @Param('user') id: string
-  ) {
-    const user = await this.userService.findOne(id);
+  ): Promise<UserResponse> {
+    const user: UserResponse = await this.userService.findOne(id);
     return user;
   }
 
   @UseGuards(JwtAuthGuard)
   @Patch('/users/password')
   async changePassword(
-    @Body() body: changePassword
+    @Body() body: changePassword,
+    @Res() res: Response
   ) {
-    const newPassword = await this.userService.setNewPassword(body);
-    if(newPassword){
-      return 'Password changed';
-    }    
+    try {
+      await this.userService.setNewPassword(body);
+      return res.status(HttpStatus.OK).json({
+        message: "Hasło zmienione"
+      })
+    } catch (err) {
+      return res.json({ message: err.message})
+    }   
   }
 
   @UseGuards(JwtAuthGuard)

@@ -2,17 +2,17 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import req from '../../helpers/request';
+import { InspectionInterface } from '../inspections/inspection.interface/inspection-interface';
 import './InspectionItem.css';
 
 const InspectionItem: React.FC = (): JSX.Element => {
-  const [inspection, setInspection] = React.useState<object[]>([]);
+  const [inspection, setInspection] = React.useState<InspectionInterface[]>([]);
 
   const { inspectionID } = useParams();
 
   useEffect(() => {
     const fetchOneInspection = async (): Promise<void> => {
-      let item: any;
-      item = await req.get(`pages/fetch/${inspectionID}`);
+      let item = await req.get(`pages/fetch/${inspectionID}`);
       setInspection(item.data.inspection);
     }
     fetchOneInspection();
@@ -23,7 +23,7 @@ const InspectionItem: React.FC = (): JSX.Element => {
     setInspection([]);
   }
 
-  const renderInspection: JSX.Element[] | string = inspection.length > 0 ? inspection.map((item: any)=>{
+  const renderInspection: JSX.Element[] | string = inspection.length > 0 ? inspection.map((item: InspectionInterface)=>{
     return (
       <div className="inspection-block-inside" key={item._id}>
         <p>Osoba wykonująca przegląd: {item.loginUserID}</p>

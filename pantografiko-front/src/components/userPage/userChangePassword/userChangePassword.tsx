@@ -6,8 +6,9 @@ import './userChangePassword.css';
 
 
 const UserChangePassword: React.FC = (): JSX.Element => {
+    const [openModal, setOpenModal] = useState<number>(0);
 
-    const { user, openModal, setOpenModal } = useContext(StoreContext);
+    const { user } = useContext(StoreContext);
 
     const [oldPassword, setOldPassword] = useState<string>('');
     const [newPassword, setNewPassword] = useState<string>('');
@@ -45,15 +46,19 @@ const UserChangePassword: React.FC = (): JSX.Element => {
 
         if(comparePassword){
             try {
-                await req.patch(`/users/password`, {
+                const data = await req.patch(`/users/password`, {
                     login: user,
                     password: oldPassword,
                     newPassword
                 });
                 resetInputs();
-                setOpenModal(true);
+                if(data.data.message === "Hasło zmienione") {
+                    setOpenModal(3);
+                } else {
+                    setCheckInputs(data.data.message);
+                }                
             } catch {
-                setCheckInputs('Wprowadzone aktualne hasło jest niepoprawne');
+                console.log("Błąd zmiany hasła");
             }            
         }       
     }

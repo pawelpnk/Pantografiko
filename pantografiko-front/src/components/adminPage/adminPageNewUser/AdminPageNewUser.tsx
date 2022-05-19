@@ -1,6 +1,5 @@
-import React, { ChangeEvent, useContext, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import req from '../../../helpers/request';
-import { StoreContext } from '../../../store/StoreProvider';
 import Modal from '../../modal/modal';
 import './adminPageNewUser.css';
 
@@ -9,10 +8,9 @@ const AdminPageNewUser: React.FC = (): JSX.Element => {
     const [password, setPassword] = useState<string>('');
     const [passwordRepeat, setPasswordRepeat] = useState<string>('');
     const [email, setEmail] = useState<string>('');
-    const [role, setRole] = useState<string>('');
+    const [role, setRole] = useState<string>('user');
     const [messageValidate, setMessageValidate] = useState<string>('');
-
-    const { openModal, setOpenModal } = useContext(StoreContext);
+    const [openModal, setOpenModal] = useState<number>(0);
 
     const handleOnLogin = (e: ChangeEvent<HTMLInputElement>): void => setLogin(e.target.value);
     const handleOnPassword = (e: ChangeEvent<HTMLInputElement>): void => setPassword(e.target.value);
@@ -56,17 +54,20 @@ const AdminPageNewUser: React.FC = (): JSX.Element => {
 
         if(validateInputs()) {
             try {
-                await req.post("/register", {
+                const data = await req.post("/register", {
                     login,
                     password,
                     email,
                     role
                 });
                 resetInputs();
-    
-                setOpenModal(true);
+                if(data.data.message === "Dodano nowego użytkownika") {
+                    setOpenModal(3);
+                } else {
+                    setMessageValidate("Login lub e-mail jest już wykorzystany");
+                }                
             } catch {
-                setMessageValidate("Login lub e-mail jest już wykorzystane");
+                console.log("Błąd rejestracji");
             }
         }
     }

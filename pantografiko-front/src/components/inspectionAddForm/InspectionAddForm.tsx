@@ -1,6 +1,5 @@
-import React, { useState, ChangeEvent, useEffect, useContext} from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import req from '../../helpers/request';
-import { StoreContext } from '../../store/StoreProvider';
 import Modal from '../modal/modal';
 import './inspectionAddForm.css';
 
@@ -26,10 +25,9 @@ const InspectionAddForm: React.FC = (): JSX.Element => {
   const [reasonReplaceSlidePlate, setReasonReplaceSlidePlate] = useState<string>('');
   const [reasonReplaceCurrentCollector, setReasonReplaceCurrentCollector] = useState<string>('');
   const [maintenanceActivities, setMaintenanceActivities] = useState<string>('');
+  const [openModal, setOpenModal] = useState<number>(0);
 
   const [messageValidation, setMessageValidation] = useState<string>('');
-
-  const { openModal, setOpenModal } = useContext(StoreContext);
 
   const handleOnChangeLocomotiveNumber = (event: ChangeEvent<HTMLInputElement>) => setLocomotiveNumber(event.target.value.toUpperCase());
   const handleOnChangeCollectorNumber = (event: ChangeEvent<HTMLInputElement>) => {
