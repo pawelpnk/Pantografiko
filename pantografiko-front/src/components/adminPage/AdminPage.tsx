@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router';
 import { Link } from 'react-router-dom';
 import './adminPage.css';
 import AdminPageNewUser from './adminPageNewUser/AdminPageNewUser';
+import AdminPageUserEdit from './adminPageUserEdit/adminPageUserEdit';
 import AdminPageUsers from './adminPageUsers/AdminPageUsers';
 
 const AdminPage: React.FC = (): JSX.Element => {
@@ -16,7 +17,7 @@ const AdminPage: React.FC = (): JSX.Element => {
             <Routes>
                 <Route path='/users' element={<AdminPageUsers/>} />
                 <Route path='/new' element={<AdminPageNewUser/>} />
-                {/* <Route path='/users/:login' element={<AdminPageUserEdit/>} /> */}
+                <Route path='/users/:login' element={<AdminPageUserEdit/>} />
             </Routes>
         </div>
     )

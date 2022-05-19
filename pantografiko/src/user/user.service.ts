@@ -21,7 +21,11 @@ export class UserService {
     return { login, email, role };
   }
 
-  async createUser(user: CreateUserDTO): Promise<UserResponse> {
+  async createUser(user: CreateUserDTO, userLoggin: IUser): Promise<UserResponse> {
+
+      if(userLoggin.role !== 'admin') {
+        throw new HttpException('Brak autoryzacji', HttpStatus.FORBIDDEN);
+      }
     
       const checkLogin: boolean = await this.findByLogin(user.login) ? true : false;
       const checkEmail: boolean = await this.findByEmail(user.email.toLowerCase()) ? true : false;
@@ -42,8 +46,8 @@ export class UserService {
       return this.filter(newUserSave);
   }
 
-  async findOne(id: string): Promise<UserResponse> {
-    const findUser = await this.userModel.findOne({_id: id}).exec();
+  async findOne(login: string): Promise<UserResponse> {
+    const findUser = await this.userModel.findOne({login}).exec();
     return this.filter(findUser);
   }
 
@@ -56,14 +60,24 @@ export class UserService {
     return returnUsersWithoutPassword;
   }
 
-  async updateUser(id: any, user: CreateUserDTO): Promise<UserResponse> {
-    const updateUser = await this.userModel.findByIdAndUpdate({_id: id}, user);
-    return this.filter(updateUser);
+  async updateUser(user: CreateUserDTO, userLoggin: IUser): Promise<UserResponse> {
+    if(userLoggin.role !== 'admin') {
+      throw new HttpException('Brak autoryzacji', HttpStatus.FORBIDDEN);
+    }
+    const findUserID: string = await this.findID(user.login);
+    const updateUser = await this.userModel.findByIdAndUpdate({_id: findUserID}, user);
+    return this.filter(updateUser);   
   }
 
-  async deleteUser(login: string): Promise<UserResponse> {
+  async deleteUser(login: string, user: IUser): Promise<UserResponse> {
+    if(user.login === login) {
+      throw new HttpException('Nie można usunąc samego siebie', HttpStatus.CONFLICT);
+    }
+    if(user.role !== 'admin') {
+      throw new HttpException('Brak autoryzacji', HttpStatus.FORBIDDEN)
+    }
     const deletedUser = await this.userModel.findOneAndDelete({login});
-    return this.filter(deletedUser);
+    return deletedUser;
   }
 
   async login(user: loginUser): Promise<userResponseLogin> {

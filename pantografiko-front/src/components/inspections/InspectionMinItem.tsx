@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { StoreContext } from '../../store/StoreProvider';
 import { InspectionInterface } from './inspection.interface/inspection-interface';
 
 interface IProps {
@@ -9,6 +10,7 @@ interface IProps {
 }
 
 const InspectionMinItem: React.FC<IProps> = ({inspection, handleOnClickCleanFetch, deleteItem}): JSX.Element => {
+    const { userObject } = useContext(StoreContext);
     return (
         <div className="inspection-block">      
             <p>Osoba wykonująca przegląd: {inspection.loginUserID}</p>
@@ -17,9 +19,13 @@ const InspectionMinItem: React.FC<IProps> = ({inspection, handleOnClickCleanFetc
             <p>Numer przeglądu: {inspection.inspectionOfNumber}</p>
             <Link onClick={handleOnClickCleanFetch} className={'link-inspection'} to={`/display/${inspection._id}`}>
                 Przejdź do szczegółów
-            </Link>      
+            </Link>
+            { (userObject?.role === "admin" || userObject?.role === "editor" || userObject?.login === inspection.loginUserID) &&
             <button onClick={() => deleteItem(inspection)} className='delete-inspection'>Usuń</button>
-            <Link className='update-inspection' to={`/display/edit/${inspection._id}`}>Edytuj</Link>      
+            }
+            { (userObject?.role === "admin" || userObject?.role === "editor" || userObject?.login === inspection.loginUserID) &&
+            <Link className='update-inspection' to={`/display/edit/${inspection._id}`}>Edytuj</Link>
+            }     
         </div>
     )
 }

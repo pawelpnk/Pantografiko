@@ -50,9 +50,10 @@ export class PagesController {
   @Delete('/delete/:id')
   async deleteInspection(
     @Res() res: Response,
-    @Param('id') ID: string
+    @Param('id') ID: string,
+    @UserObj() user: IUser
   ) {
-    const deletedInspection = await this.pagesService.deleteInspection(ID);
+    const deletedInspection = await this.pagesService.deleteInspection(ID, user);
     return res.status(HttpStatus.OK).json({
       message: 'Inspekcja usunięta',
       inspection: deletedInspection
@@ -64,9 +65,10 @@ export class PagesController {
   async updateinspection(
     @Res() res: Response,
     @Param('id') ID: string,
-    @Body() inspectionDTO: CreatePagesDTO
+    @Body() inspectionDTO: CreatePagesDTO,
+    @UserObj() user: IUser
   ) {
-    const updateInspection = await this.pagesService.updateInspection(ID, inspectionDTO);
+    const updateInspection = await this.pagesService.updateInspection(ID, inspectionDTO, user);
     return res.status(HttpStatus.OK).json({
       message: 'Inspekcja zaaktualizowana',
       inspection: updateInspection

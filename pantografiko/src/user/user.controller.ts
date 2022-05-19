@@ -7,6 +7,8 @@ import { JwtAuthGuard } from '../auth/jwt.guard';
 import { changePassword } from '../dto/changePassword';
 import { userResponseLogin } from '../dto/userResponseLogin.dto';
 import { UserResponse } from '../dto/userResponse.dto';
+import { UserObj } from 'src/decorators/user.decorator';
+import { IUser } from 'src/interfaces/user.interface';
 
 @Controller('/')
 export class UserController {
@@ -16,10 +18,11 @@ export class UserController {
   @Post('/register')
   async createUser(
     @Res() res: Response,
-    @Body() newUser: CreateUserDTO
+    @Body() newUser: CreateUserDTO,
+    @UserObj() userLoggin: IUser
   ) {
     try {
-      const user: UserResponse = await this.userService.createUser(newUser);
+      const user: UserResponse = await this.userService.createUser(newUser, userLoggin);
       return res.status(HttpStatus.OK).json({
         message: 'Dodano nowego użytkownika',
         user
@@ -60,9 +63,9 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   @Get('/users/:user')
   async getOneUser(
-    @Param('user') id: string
+    @Param('user') login: string
   ): Promise<UserResponse> {
-    const user: UserResponse = await this.userService.findOne(id);
+    const user: UserResponse = await this.userService.findOne(login);
     return user;
   }
 
@@ -82,12 +85,33 @@ export class UserController {
     }   
   }
 
+  @Patch('/users/role')
+  async changeRole (
+    @Body() body: IUser,
+    @Res() res: Response,
+    @UserObj() userLoggin: IUser
+  ) {
+    try {
+      await this.userService.updateUser(body, userLoggin);
+      return res.status(HttpStatus.OK).json({ message: "Zaaktualizowano"})
+    } catch (err) {
+      return res.json({message: err.message});
+    }
+  }
+
   @UseGuards(JwtAuthGuard)
   @Delete('/users/:login')
   async deleteUser(
-    @Param('login') login: string
+    @Param('login') login: string,
+    @UserObj() user: IUser,
+    @Res() res: Response
   ) {
-    const deletedUser = await this.userService.deleteUser(login);
-    return deletedUser;
+    try {
+      await this.userService.deleteUser(login, user);
+      return res.status(HttpStatus.OK).json({ message: 'ok'});
+    } catch (err) {
+      return res.json({ message: err.message });
+    }
+    
   }
 }

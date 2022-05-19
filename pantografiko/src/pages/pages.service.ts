@@ -30,13 +30,19 @@ export class PagesService {
     return fetchOneInspection;
   }
 
-  async deleteInspection(inspectionID: string): Promise<any> {
-    const findInspectionAndDelete = await this.pagesModel.findByIdAndDelete({_id: inspectionID});
-    return findInspectionAndDelete;
+  async deleteInspection(inspectionID: string, user: IUser): Promise<any> {
+    const findInspection = await this.findInspection(inspectionID);
+    if(user.role === 'admin' || user.role === 'editor' || user.login === findInspection[0].loginUserID) {
+      const findInspectionAndDelete = await this.pagesModel.findByIdAndDelete({_id: inspectionID});
+      return findInspectionAndDelete;
+    }    
   }
 
-  async updateInspection(inspectionID: string, createInspectionDTO: CreatePagesDTO): Promise<Pages> {
-    const findInspectionAndUpdate = await this.pagesModel.findByIdAndUpdate({_id: inspectionID}, createInspectionDTO);
-    return findInspectionAndUpdate;
+  async updateInspection(inspectionID: string, createInspectionDTO: CreatePagesDTO, user: IUser): Promise<Pages> {
+    const findInspection = await this.findInspection(inspectionID);
+    if(user.role === 'admin' || user.role === 'editor' || user.login === findInspection[0].loginUserID) {
+      const findInspectionAndUpdate = await this.pagesModel.findByIdAndUpdate({_id: inspectionID}, createInspectionDTO);
+      return findInspectionAndUpdate;
+    }
   }
 }

@@ -15,7 +15,7 @@ const Content: React.FC = (): JSX.Element => {
   const { user, token, userObject } = useContext(StoreContext);
 
   const isUserLogged: boolean = Boolean(user) && Boolean(token);
-  const isUserAdminLogged: boolean = Boolean(user) && Boolean(token) && Boolean(userObject.role === 'user');
+  const isUserAdminLogged: boolean = Boolean(user) && Boolean(token) && Boolean(userObject?.role === 'admin');
 
   return (
       <Routes>

@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import req from '../../helpers/request';
+import { StoreContext } from '../../store/StoreProvider';
 import { InspectionInterface } from '../inspections/inspection.interface/inspection-interface';
 import './InspectionItem.css';
 
@@ -9,6 +10,7 @@ const InspectionItem: React.FC = (): JSX.Element => {
   const [inspection, setInspection] = React.useState<InspectionInterface[]>([]);
 
   const { inspectionID } = useParams();
+  const { userObject } = useContext(StoreContext);
 
   useEffect(() => {
     const fetchOneInspection = async (): Promise<void> => {
@@ -47,8 +49,12 @@ const InspectionItem: React.FC = (): JSX.Element => {
         <p>Przyczyna wymiany nakładki ślizgowej: {item.reasonReplaceSlidePlate}</p>
         <p>Przyczyna wymiany odbieraka prądu: {item.reasonReplaceCurrentCollector}</p>
         <p>Dodatkowe informacje związane z czynnościami obsługowymi: {item.maintenanceActivities}</p>
+        { (userObject?.role === "admin" || userObject?.role === "editor" || userObject?.login === item.loginUserID) &&
         <button onClick={deleteItem} className='delete-inspection2 one-inspection'><Link to={`/display`}>Usuń</Link></button>
+        }
+        { (userObject?.role === "admin" || userObject?.role === "editor" || userObject?.login === item.loginUserID) &&
         <button className='update-inspection2 one-inspection'><Link to={`/display/edit/${item._id}`}>Edytuj</Link></button>
+        }
         <button className="return-page one-inspection"><Link to="/display">Wróć</Link></button>
       </div>
     )
